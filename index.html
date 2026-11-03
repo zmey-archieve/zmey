@@ -4,18 +4,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#080c0d">
 <title>zmey.</title>
 
 <style>
 :root {
-  --ink: #080c0d;
-  --text: #e2ded9;
-  --muted: #a9a3a0;
+  --bg: #0b0d0e;
+  --panel: #111315;
+  --card: #191a1c;
+  --text: #e9e4df;
+  --muted: #a69d99;
+  --line: #504649;
   --red: #963b45;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 html, body {
   margin: 0;
@@ -23,50 +27,18 @@ html, body {
 }
 
 body {
-  background: var(--ink);
+  background:
+    radial-gradient(ellipse at 50% 40%, #242a2b 0%, #111617 42%, #080a0b 100%);
   color: var(--text);
   font-family: Arial, Helvetica, sans-serif;
-  overflow-x: hidden;
 }
 
-button { font: inherit; cursor: pointer; }
-
-/* HAREKETLİ ORMAN */
-#forestCanvas {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  display: block;
-  pointer-events: none;
+button {
+  font: inherit;
+  cursor: pointer;
 }
 
-.forest-shade {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(
-      ellipse at 50% 43%,
-      #00000008 0%,
-      #00000038 48%,
-      #000000b5 100%
-    ),
-    linear-gradient(
-      180deg,
-      #03060755 0%,
-      transparent 30%,
-      #03060730 70%,
-      #030607b0 100%
-    );
-}
-
-/* SAYFA */
 .page {
-  position: relative;
-  z-index: 1;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
@@ -75,16 +47,16 @@ button { font: inherit; cursor: pointer; }
 header {
   display: flex;
   justify-content: flex-end;
-  padding: 34px 6%;
+  padding: 32px 6%;
 }
 
 .connected {
   display: flex;
   align-items: center;
-  gap: 13px;
-  color: #c7bfbb;
+  gap: 12px;
+  color: #c5bab5;
   font-size: 10px;
-  letter-spacing: 4px;
+  letter-spacing: 3px;
 }
 
 .connected::before {
@@ -93,33 +65,28 @@ header {
   height: 7px;
   background: var(--red);
   border-radius: 50%;
-  box-shadow: 0 0 12px #963b4566;
-  animation: pulse 3.5s infinite;
-}
-
-@keyframes pulse {
-  50% { opacity: .35; }
+  box-shadow: 0 0 12px #963b4580;
 }
 
 main {
   flex: 1;
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding: 45px 22px 90px;
+  justify-content: center;
+  padding: 50px 20px 75px;
 }
 
 .content {
   width: 100%;
-  max-width: 950px;
+  max-width: 840px;
   text-align: center;
-  animation: reveal 1.8s ease both;
+  animation: appear 1s ease both;
 }
 
-@keyframes reveal {
+@keyframes appear {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -129,228 +96,348 @@ main {
 
 h1 {
   margin: 0;
-  font-size: clamp(76px, 10vw, 132px);
+  font-size: clamp(75px, 11vw, 125px);
   font-weight: 400;
-  font-style: normal;
   letter-spacing: -.085em;
   line-height: 1;
-  text-shadow: 0 3px 28px #000a;
 }
 
-h1 span { color: #a73542; }
+h1 span {
+  color: var(--red);
+}
 
 .quote {
-  max-width: 760px;
-  margin: 37px auto 0;
-  color: #d7d0cb;
-  font-size: clamp(12px, 1.4vw, 16px);
-  font-weight: 400;
+  max-width: 720px;
+  margin: 35px auto 0;
+  color: #d4ccc6;
+  font-size: clamp(12px, 1.5vw, 15px);
   font-style: normal;
+  letter-spacing: .1em;
   line-height: 2;
-  letter-spacing: .12em;
-  text-shadow: 0 2px 12px #000;
 }
 
 .author {
   display: block;
-  margin-top: 18px;
-  color: #c0b5b0;
+  margin-top: 17px;
+  color: #b9aca6;
   font-size: 10px;
   letter-spacing: 4px;
 }
 
-.divider {
-  width: min(540px, 78%);
-  height: 1px;
-  margin: 54px auto 48px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    #71343c 25%,
-    #71343c 75%,
-    transparent
-  );
+/* SYSTEM ARCHIVE */
+
+.archive {
+  width: 100%;
+  max-width: 690px;
+  margin: 56px auto 0;
+  padding: 22px;
+  background: #0a0c0de8;
+  border: 1px solid var(--line);
+  text-align: left;
+  box-shadow: 0 25px 70px #0005;
 }
 
-/* KLASÖRLER */
-.folders {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
-  max-width: 760px;
-  margin: auto;
-}
-
-.folder {
-  min-height: 108px;
-  padding: 24px 27px;
+.archive-header,
+.archive-path,
+.archive-footer {
   display: flex;
   align-items: center;
-  gap: 22px;
-  background: #080b0bd9;
-  border: 1px solid #80726d;
-  color: var(--text);
-  text-align: left;
-  transition:
-    transform .3s,
-    background .3s,
-    border-color .3s;
+  justify-content: space-between;
+  gap: 12px;
 }
 
-.folder:hover,
-.folder:focus-visible {
-  transform: translateY(-3px);
-  background: #20171ae8;
-  border-color: #c29a9e;
+.archive-header {
+  padding-bottom: 17px;
+  border-bottom: 1px solid var(--line);
+}
+
+.archive-brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: #d5cbc5;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  background: var(--red);
+  border-radius: 50%;
+}
+
+.archive-code,
+.archive-path,
+.archive-footer {
+  color: #938a86;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+}
+
+.archive-path {
+  padding: 22px 0;
+}
+
+.access {
+  color: #b27b82;
+}
+
+.archive-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 13px;
+}
+
+.file {
+  position: relative;
+  min-height: 190px;
+  padding: 21px;
+  background: var(--card);
+  border: 1px solid #51474a;
+  color: var(--text);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  transition: .3s ease;
+}
+
+.file:hover,
+.file:focus-visible {
+  background: #251c20;
+  border-color: #a16a73;
+  transform: translateY(-4px);
   outline: none;
 }
 
-.folder-icon {
-  width: 36px;
-  height: 36px;
-  flex-shrink: 0;
-  fill: none;
-  stroke: #d6c9c0;
-  stroke-width: 1.3;
+.file-top,
+.file-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.folder-info { flex: 1; }
+.file-id {
+  color: #b78088;
+  font-size: 9px;
+  letter-spacing: 2px;
+}
 
-.folder-name {
-  display: block;
+.file-icon {
+  width: 29px;
+  height: 29px;
+  fill: none;
+  stroke: #c7bbb5;
+  stroke-width: 1.35;
+}
+
+.file-middle {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 18px 0;
+}
+
+.file-name {
   font-size: 23px;
+  font-weight: 400;
   letter-spacing: 3px;
 }
 
-.folder-sub {
-  display: block;
+.file-sub {
   margin-top: 9px;
-  color: #b5aaa4;
+  color: #a99e99;
   font-size: 9px;
-  letter-spacing: 2.5px;
+  letter-spacing: 2px;
 }
 
-.arrow {
-  width: 23px;
-  height: 23px;
-  flex-shrink: 0;
+.file-bottom {
+  color: #958b87;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+}
+
+.file-arrow {
+  width: 19px;
+  height: 19px;
   fill: none;
-  stroke: #c2b3ac;
-  stroke-width: 1.3;
-  transition: transform .3s, stroke .3s;
+  stroke: #d3c6c0;
+  stroke-width: 1.4;
+  transition: transform .3s;
 }
 
-.folder:hover .arrow {
-  transform: translateX(6px);
-  stroke: #cf8791;
+.file:hover .file-arrow {
+  transform: translate(3px, -3px);
 }
 
-/* ALT BAR */
+.archive-footer {
+  margin-top: 20px;
+}
+
+.cursor {
+  display: inline-block;
+  width: 6px;
+  height: 11px;
+  margin-left: 5px;
+  background: var(--red);
+  animation: blink 1.1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* POPUP */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: #020304c9;
+  backdrop-filter: blur(7px);
+}
+
+.overlay.open {
+  display: flex;
+}
+
+.terminal {
+  width: 100%;
+  max-width: 470px;
+  background: #101214;
+  border: 1px solid #79565e;
+  box-shadow: 0 30px 100px #000c;
+}
+
+.terminal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 17px 21px;
+  background: #25191d;
+  border-bottom: 1px solid #79565e;
+}
+
+.terminal-title {
+  color: #e6dcd6;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.close {
+  border: 0;
+  background: none;
+  color: #e6dcd6;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.terminal-body {
+  padding: 26px;
+}
+
+.terminal-status {
+  margin: 0 0 25px;
+  color: #b07c83;
+  font-size: 10px;
+  letter-spacing: 2px;
+  line-height: 2;
+}
+
+.terminal-link {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 4px;
+  border: 0;
+  border-bottom: 1px solid #393236;
+  background: transparent;
+  color: #e5dcd7;
+  text-align: left;
+  font-size: 12px;
+  letter-spacing: 3px;
+  opacity: 0;
+  transform: translateY(7px);
+  animation: revealLink .4s ease forwards;
+}
+
+.terminal-link:nth-of-type(2) {
+  animation-delay: .15s;
+}
+
+@keyframes revealLink {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.terminal-link:hover {
+  color: #d28b95;
+}
+
+.terminal-link svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+}
+
+.terminal-foot {
+  margin-top: 25px;
+  color: #7e8984;
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+
+/* FOOTER */
+
 footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 25px 6%;
-  color: #c0b5ae;
+  color: #a99e98;
   font-size: 10px;
-  letter-spacing: 3px;
+  letter-spacing: 2px;
 }
 
 .sound {
   border: 0;
-  background: transparent;
+  background: none;
   color: inherit;
   font-size: 10px;
   letter-spacing: 2px;
-  padding: 10px;
+  padding: 8px;
 }
 
-.sound:hover { color: white; }
-
-/* PENCERELER */
-.window {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 430px;
-  max-width: 90vw;
-  background: #0c0e10f5;
-  border: 1px solid #79575e;
-  box-shadow: 0 25px 100px #000e;
-  z-index: 30;
+.sound:hover {
+  color: white;
 }
 
-.window.open { display: block; }
-
-.window-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 17px 21px;
-  background: #24171b;
-  border-bottom: 1px solid #79575e;
-  font-size: 11px;
-  letter-spacing: 3px;
-}
-
-.window-head button {
-  border: 0;
-  background: transparent;
-  color: #e8e0db;
-  font-size: 24px;
-  line-height: 1;
-}
-
-.window-links { padding: 17px 27px; }
-
-.window-link {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 22px 5px;
-  border: 0;
-  border-bottom: 1px solid #393236;
-  background: transparent;
-  color: #e8e0db;
-  font-size: 13px;
-  letter-spacing: 3px;
-  text-align: left;
-}
-
-.window-link:last-child { border: 0; }
-
-.window-link:hover { color: #d1909a; }
-
-.window-link svg {
-  width: 20px;
-  height: 20px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.3;
-  transition: transform .25s;
-}
-
-.window-link:hover svg {
-  transform: translate(3px, -3px);
-}
-
-@media(max-width: 700px) {
+@media(max-width: 600px) {
   header { padding: 25px 7%; }
-  main { padding: 40px 22px 70px; }
-  h1 { font-size: clamp(72px, 16vw, 100px); }
-  .quote { letter-spacing: .06em; }
-  .author { letter-spacing: 3px; }
-  .divider { margin: 40px auto 35px; }
-  .folders {
-    grid-template-columns: 1fr;
-    max-width: 420px;
-    gap: 15px;
-  }
-  .folder { min-height: 95px; padding: 20px 24px; }
-  footer { padding: 22px 7%; font-size: 9px; letter-spacing: 1px; }
+  main { padding: 35px 16px 60px; }
+  .quote { letter-spacing: .04em; }
+  .author { letter-spacing: 2px; }
+  .archive { padding: 15px; margin-top: 40px; }
+  .archive-brand { font-size: 8px; }
+  .archive-code { font-size: 8px; }
+  .archive-path { font-size: 8px; }
+  .archive-grid { gap: 9px; }
+  .file { min-height: 170px; padding: 13px; }
+  .file-name { font-size: 18px; }
+  .file-sub { font-size: 8px; letter-spacing: 1px; }
+  .file-id { font-size: 8px; }
+  .file-icon { width: 24px; height: 24px; }
+  footer { padding: 20px 7%; font-size: 9px; }
 }
 
 @media(prefers-reduced-motion: reduce) {
@@ -364,16 +451,15 @@ footer {
 
 <body>
 
-<canvas id="forestCanvas" aria-hidden="true"></canvas>
-<div class="forest-shade"></div>
-
 <div class="page">
+
   <header>
     <div class="connected">CONNECTED</div>
   </header>
 
   <main>
     <section class="content">
+
       <h1>zmey<span>.</span></h1>
 
       <p class="quote">
@@ -384,37 +470,79 @@ footer {
         </span>
       </p>
 
-      <div class="divider"></div>
+      <div class="archive">
 
-      <nav class="folders" aria-label="ZMEY bağlantıları">
-        <button class="folder" onclick="openWindow('games')">
-          <svg class="folder-icon" viewBox="0 0 48 48" aria-hidden="true">
-            <path d="M4 13h16l6 6h18v23H4z"/>
-            <path d="M4 19h40"/>
-          </svg>
-          <span class="folder-info">
-            <span class="folder-name">games/</span>
-            <span class="folder-sub">STEAM · KICK</span>
-          </span>
-          <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M4 12h15M13 6l6 6-6 6"/>
-          </svg>
-        </button>
+        <div class="archive-header">
+          <div class="archive-brand">
+            <span class="dot"></span>
+            ZMEY — SYSTEM ARCHIVE
+          </div>
+          <span class="archive-code">SYS.001</span>
+        </div>
 
-        <button class="folder" onclick="openWindow('videos')">
-          <svg class="folder-icon" viewBox="0 0 48 48" aria-hidden="true">
-            <path d="M4 13h16l6 6h18v23H4z"/>
-            <path d="M4 19h40"/>
-          </svg>
-          <span class="folder-info">
-            <span class="folder-name">videos/</span>
-            <span class="folder-sub">YOUTUBE · INSTAGRAM</span>
-          </span>
-          <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M4 12h15M13 6l6 6-6 6"/>
-          </svg>
-        </button>
-      </nav>
+        <div class="archive-path">
+          <span>C:\ZMEY\ARCHIVE</span>
+          <span class="access">ACCESS GRANTED</span>
+        </div>
+
+        <div class="archive-grid">
+
+          <button class="file" onclick="openTerminal('games')">
+            <div class="file-top">
+              <span class="file-id">FILE_001</span>
+              <svg class="file-icon" viewBox="0 0 32 32">
+                <path d="M9 12h14c3 0 5 3 6 9 1 4-2 6-5 3l-4-4h-8l-4 4c-3 3-6 1-5-3 1-6 3-9 6-9z"/>
+                <path d="M10 15v7M6.5 18.5h7"/>
+                <circle cx="22" cy="16" r="1"/>
+                <circle cx="25" cy="19" r="1"/>
+              </svg>
+            </div>
+
+            <div class="file-middle">
+              <span class="file-name">GAMES</span>
+              <span class="file-sub">STEAM / KICK</span>
+            </div>
+
+            <div class="file-bottom">
+              <span>DIR / OPEN</span>
+              <svg class="file-arrow" viewBox="0 0 24 24">
+                <path d="M5 19 19 5M8 5h11v11"/>
+              </svg>
+            </div>
+          </button>
+
+          <button class="file" onclick="openTerminal('videos')">
+            <div class="file-top">
+              <span class="file-id">FILE_002</span>
+              <svg class="file-icon" viewBox="0 0 32 32">
+                <rect x="4" y="9" width="24" height="16" rx="2"/>
+                <path d="M4 14h24M10 9l4 5M19 9l4 5"/>
+                <path d="m14 17 6 3-6 3z"/>
+              </svg>
+            </div>
+
+            <div class="file-middle">
+              <span class="file-name">VIDEOS</span>
+              <span class="file-sub">YOUTUBE / INSTAGRAM</span>
+            </div>
+
+            <div class="file-bottom">
+              <span>DIR / OPEN</span>
+              <svg class="file-arrow" viewBox="0 0 24 24">
+                <path d="M5 19 19 5M8 5h11v11"/>
+              </svg>
+            </div>
+          </button>
+
+        </div>
+
+        <div class="archive-footer">
+          <span>SYSTEM READY <span class="cursor"></span></span>
+          <span>02 FILES FOUND</span>
+        </div>
+
+      </div>
+
     </section>
   </main>
 
@@ -424,303 +552,104 @@ footer {
       ◌ SOUND OFF
     </button>
   </footer>
+
 </div>
 
-<div class="window" id="games" role="dialog" aria-label="Games">
-  <div class="window-head">
-    <span>GAMES</span>
-    <button onclick="closeWindow('games')" aria-label="Kapat">×</button>
-  </div>
-  <div class="window-links">
-    <button class="window-link" onclick="comingSoon('Steam')">
-      STEAM
-      <svg viewBox="0 0 24 24"><path d="M5 19 19 5M8 5h11v11"/></svg>
-    </button>
-    <button class="window-link" onclick="comingSoon('Kick')">
-      KICK
-      <svg viewBox="0 0 24 24"><path d="M5 19 19 5M8 5h11v11"/></svg>
-    </button>
-  </div>
-</div>
+<div class="overlay" id="overlay" onclick="closeTerminal(event)">
+  <div class="terminal" role="dialog" aria-modal="true"
+       aria-label="Archive terminal">
 
-<div class="window" id="videos" role="dialog" aria-label="Videos">
-  <div class="window-head">
-    <span>VIDEOS</span>
-    <button onclick="closeWindow('videos')" aria-label="Kapat">×</button>
-  </div>
-  <div class="window-links">
-    <button class="window-link" onclick="comingSoon('YouTube')">
-      YOUTUBE
-      <svg viewBox="0 0 24 24"><path d="M5 19 19 5M8 5h11v11"/></svg>
-    </button>
-    <button class="window-link" onclick="comingSoon('Instagram')">
-      INSTAGRAM
-      <svg viewBox="0 0 24 24"><path d="M5 19 19 5M8 5h11v11"/></svg>
-    </button>
+    <div class="terminal-header">
+      <span class="terminal-title" id="terminalTitle">FILE_001 / GAMES</span>
+      <button class="close" onclick="closeTerminal()" aria-label="Kapat">×</button>
+    </div>
+
+    <div class="terminal-body">
+      <p class="terminal-status" id="terminalStatus"></p>
+      <div id="terminalLinks"></div>
+      <div class="terminal-foot">
+        END OF DIRECTORY <span class="cursor"></span>
+      </div>
+    </div>
+
   </div>
 </div>
 
 <script>
-/* SİNEMATİK ORMAN MOTORU */
-const canvas = document.getElementById("forestCanvas");
-const ctx = canvas.getContext("2d", { alpha: false });
+const directories = {
+  games: {
+    title: "FILE_001 / GAMES",
+    path: "C:\\ZMEY\\ARCHIVE\\GAMES",
+    links: ["STEAM", "KICK"]
+  },
+  videos: {
+    title: "FILE_002 / VIDEOS",
+    path: "C:\\ZMEY\\ARCHIVE\\VIDEOS",
+    links: ["YOUTUBE", "INSTAGRAM"]
+  }
+};
 
-let W = 0;
-let H = 0;
-let dpr = 1;
-let lastTime = 0;
-let elapsed = 0;
-let trees = [];
+const arrowSVG = `
+<svg viewBox="0 0 24 24" aria-hidden="true">
+  <path d="M5 19 19 5M8 5h11v11"/>
+</svg>`;
 
-const reduceMotion = window.matchMedia(
-  "(prefers-reduced-motion: reduce)"
-).matches;
+function openTerminal(type) {
+  const data = directories[type];
 
-function rnd(n) {
-  const v = Math.sin(n * 127.1 + 42.7) * 43758.5453;
-  return v - Math.floor(v);
+  document.getElementById("terminalTitle").textContent =
+    data.title;
+
+  document.getElementById("terminalStatus").textContent =
+    "> " + data.path + "\n> DIRECTORY OPENED";
+
+  document.getElementById("terminalStatus").style.whiteSpace =
+    "pre-line";
+
+  document.getElementById("terminalLinks").innerHTML =
+    data.links.map(name => `
+      <button class="terminal-link"
+        onclick="comingSoon('${name}')">
+        <span>${name}</span>
+        ${arrowSVG}
+      </button>
+    `).join("");
+
+  document.getElementById("overlay").classList.add("open");
+  document.querySelector(".close").focus();
 }
 
-function resize() {
-  dpr = Math.min(window.devicePixelRatio || 1, 2);
-  W = window.innerWidth;
-  H = window.innerHeight;
-
-  canvas.width = Math.round(W * dpr);
-  canvas.height = Math.round(H * dpr);
-
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-  trees = [];
-
-  for (let i = 0; i < 85; i++) {
-    const depth = .12 + rnd(i + 10) * .88;
-
-    trees.push({
-      x: rnd(i + 200) * 1.6 - .3,
-      depth,
-      height: .7 + rnd(i + 400) * 1.1,
-      lean: (rnd(i + 500) - .5) * .13,
-      seed: rnd(i + 700) * 100,
-      branches: 5 + Math.floor(rnd(i + 900) * 6)
-    });
+function closeTerminal(event) {
+  if (event && event.target !== event.currentTarget) {
+    return;
   }
 
-  trees.sort((a, b) => a.depth - b.depth);
+  document.getElementById("overlay").classList.remove("open");
 }
 
-window.addEventListener("resize", resize);
-resize();
-
-function drawTree(tree, t) {
-  const depth = tree.depth;
-
-  /* Yavaş ileri hareket / parallax */
-  const travel = reduceMotion ? 0 :
-    (Math.sin(t * .00012) * .025);
-
-  const perspective = depth + travel * depth;
-
-  const scale = .25 + perspective * 1.9;
-  const x = (tree.x - .5) * W * scale + W / 2;
-  const baseY = H * (.73 + perspective * .37);
-  const height = H * tree.height * scale;
-  const trunkWidth = Math.max(1.5, 3 + perspective * 15);
-
-  const sway = reduceMotion ? 0 :
-    Math.sin(t * .00035 + tree.seed) * (2 + depth * 4);
-
-  const darkness = Math.floor(18 - depth * 15);
-  const alpha = .22 + depth * .76;
-
-  ctx.save();
-  ctx.globalAlpha = alpha;
-  ctx.translate(x, baseY);
-
-  ctx.strokeStyle =
-    `rgb(${darkness},${darkness + 4},${darkness + 5})`;
-  ctx.lineCap = "round";
-
-  /* Gövde */
-  ctx.beginPath();
-  ctx.moveTo(0, 0);
-  ctx.bezierCurveTo(
-    sway * .2, -height * .35,
-    sway + tree.lean * height, -height * .75,
-    sway + tree.lean * height * 1.4, -height
-  );
-  ctx.lineWidth = trunkWidth;
-  ctx.stroke();
-
-  /* Dallar */
-  for (let b = 0; b < tree.branches; b++) {
-    const p = .25 + b / tree.branches * .68;
-    const side = b % 2 === 0 ? -1 : 1;
-
-    const startX = sway * p + tree.lean * height * p;
-    const startY = -height * p;
-
-    const length = height * (.14 + rnd(b + tree.seed) * .18);
-    const angle = side * (.5 + rnd(b + tree.seed + 50) * .5);
-
-    const endX = startX + Math.sin(angle) * length;
-    const endY = startY - Math.cos(angle) * length;
-
-    ctx.beginPath();
-    ctx.moveTo(startX, startY);
-    ctx.quadraticCurveTo(
-      startX + (endX - startX) * .7,
-      startY - length * .1,
-      endX + sway * .3,
-      endY
-    );
-    ctx.lineWidth = Math.max(1, trunkWidth * (.35 - p * .2));
-    ctx.stroke();
-
-    /* Küçük yan dallar */
-    ctx.beginPath();
-    ctx.moveTo(
-      startX + (endX - startX) * .65,
-      startY + (endY - startY) * .65
-    );
-    ctx.lineTo(
-      endX + side * length * .16,
-      endY - length * .28
-    );
-    ctx.lineWidth = Math.max(.6, trunkWidth * .11);
-    ctx.stroke();
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") {
+    closeTerminal();
   }
-
-  ctx.restore();
-}
-
-function drawFog(t, layer) {
-  const drift = reduceMotion ? 0 :
-    Math.sin(t * .0001 + layer * 2) * W * .12;
-
-  const y = H * (.36 + layer * .16);
-  const x = W * .5 + drift;
-
-  const fog = ctx.createRadialGradient(
-    x, y, 0,
-    x, y, W * .7
-  );
-
-  const opacity = layer === 0 ? .085 : .12;
-
-  fog.addColorStop(0, `rgba(157,177,177,${opacity})`);
-  fog.addColorStop(.45, `rgba(112,139,140,${opacity * .45})`);
-  fog.addColorStop(1, "rgba(112,139,140,0)");
-
-  ctx.fillStyle = fog;
-  ctx.fillRect(0, 0, W, H);
-}
-
-function drawBackground(t) {
-  const glow = reduceMotion ? 0 :
-    Math.sin(t * .0002) * .035;
-
-  const bg = ctx.createRadialGradient(
-    W * .5, H * .4, 0,
-    W * .5, H * .4, Math.max(W, H) * .85
-  );
-
-  bg.addColorStop(0, `rgb(
-    ${Math.floor(31 + glow * 30)},
-    ${Math.floor(41 + glow * 30)},
-    ${Math.floor(43 + glow * 30)}
-  )`);
-  bg.addColorStop(.55, "#10191b");
-  bg.addColorStop(1, "#030607");
-
-  ctx.fillStyle = bg;
-  ctx.fillRect(0, 0, W, H);
-
-  /* Uzak ışık */
-  const light = ctx.createRadialGradient(
-    W * .52, H * .37, 0,
-    W * .52, H * .37, W * .5
-  );
-
-  light.addColorStop(0, "rgba(130,150,148,.10)");
-  light.addColorStop(1, "rgba(130,150,148,0)");
-
-  ctx.fillStyle = light;
-  ctx.fillRect(0, 0, W, H);
-}
-
-function drawGround() {
-  const ground = ctx.createLinearGradient(
-    0, H * .7, 0, H
-  );
-  ground.addColorStop(0, "rgba(3,6,7,0)");
-  ground.addColorStop(1, "rgba(2,4,5,.85)");
-
-  ctx.fillStyle = ground;
-  ctx.fillRect(0, H * .7, W, H * .3);
-}
-
-function render(time) {
-  const delta = lastTime ? Math.min(time - lastTime, 50) : 16;
-  lastTime = time;
-  elapsed += delta;
-
-  drawBackground(elapsed);
-
-  /* Uzak ağaçlar */
-  trees.filter(tree => tree.depth < .48)
-    .forEach(tree => drawTree(tree, elapsed));
-
-  drawFog(elapsed, 0);
-
-  /* Orta katman */
-  trees.filter(tree => tree.depth >= .48 && tree.depth < .78)
-    .forEach(tree => drawTree(tree, elapsed));
-
-  drawFog(elapsed, 1);
-
-  /* Yakın ağaçlar */
-  trees.filter(tree => tree.depth >= .78)
-    .forEach(tree => drawTree(tree, elapsed));
-
-  drawGround();
-
-  if (!reduceMotion) {
-    requestAnimationFrame(render);
-  }
-}
-
-requestAnimationFrame(render);
-
-/* PENCERELER */
-function openWindow(id) {
-  document.querySelectorAll(".window").forEach(w => {
-    w.classList.remove("open");
-  });
-  document.getElementById(id).classList.add("open");
-}
-
-function closeWindow(id) {
-  document.getElementById(id).classList.remove("open");
-}
+});
 
 function comingSoon(name) {
   alert(name + " bağlantısı yakında eklenecek.");
 }
 
-/* ORİJİNAL AMBIENT SES */
+/* SES */
 let audioContext = null;
-let soundNodes = [];
+let oscillators = [];
 let soundOn = false;
 
 function toggleSound() {
   const button = document.getElementById("soundButton");
 
   if (soundOn) {
-    soundNodes.forEach(node => {
-      try { node.stop(); } catch (e) {}
+    oscillators.forEach(osc => {
+      try { osc.stop(); } catch(e) {}
     });
-    soundNodes = [];
+    oscillators = [];
     soundOn = false;
     button.textContent = "◌ SOUND OFF";
     return;
@@ -730,41 +659,33 @@ function toggleSound() {
     const AudioCtx =
       window.AudioContext || window.webkitAudioContext;
 
-    if (!AudioCtx) {
-      alert("Tarayıcınız ses özelliğini desteklemiyor.");
-      return;
-    }
+    if (!AudioCtx) return;
 
-    if (!audioContext) {
-      audioContext = new AudioCtx();
-    }
-
+    if (!audioContext) audioContext = new AudioCtx();
     audioContext.resume();
 
     const master = audioContext.createGain();
     master.gain.value = .025;
     master.connect(audioContext.destination);
 
-    [55, 82.41, 110].forEach((frequency, i) => {
-      const oscillator = audioContext.createOscillator();
+    [55, 82.41, 110].forEach((freq, i) => {
+      const osc = audioContext.createOscillator();
       const gain = audioContext.createGain();
 
-      oscillator.type = "sine";
-      oscillator.frequency.value = frequency;
+      osc.type = "sine";
+      osc.frequency.value = freq;
       gain.gain.value = i === 0 ? .35 : .12;
 
-      oscillator.connect(gain);
+      osc.connect(gain);
       gain.connect(master);
-      oscillator.start();
-
-      soundNodes.push(oscillator);
+      osc.start();
+      oscillators.push(osc);
     });
 
     soundOn = true;
     button.textContent = "◉ SOUND ON";
-
-  } catch (error) {
-    console.error("Ses başlatılamadı:", error);
+  } catch (e) {
+    console.error(e);
   }
 }
 </script>
