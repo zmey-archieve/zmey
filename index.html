@@ -4,16 +4,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#080b0c">
+<meta name="theme-color" content="#080c0d">
 <title>zmey.</title>
 
 <style>
 :root {
-  --bg: #080b0c;
-  --paper: #e3e0dc;
-  --muted: #a39d9b;
-  --red: #852c37;
-  --border: #665e5b;
+  --ink: #080c0d;
+  --text: #e2ded9;
+  --muted: #a9a3a0;
+  --red: #963b45;
 }
 
 * { box-sizing: border-box; }
@@ -24,134 +23,47 @@ html, body {
 }
 
 body {
-  background: var(--bg);
-  color: var(--paper);
+  background: var(--ink);
+  color: var(--text);
   font-family: Arial, Helvetica, sans-serif;
   overflow-x: hidden;
 }
 
-button {
-  font: inherit;
-  cursor: pointer;
-}
+button { font: inherit; cursor: pointer; }
 
-/* ORMAN — TAMAMEN KODLA */
-.forest {
+/* HAREKETLİ ORMAN */
+#forestCanvas {
   position: fixed;
   inset: 0;
-  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  display: block;
+  pointer-events: none;
+}
+
+.forest-shade {
+  position: fixed;
+  inset: 0;
   z-index: 0;
   pointer-events: none;
   background:
     radial-gradient(
-      ellipse at 50% 40%,
-      #263032 0%,
-      #141b1d 40%,
-      #060809 85%
+      ellipse at 50% 43%,
+      #00000008 0%,
+      #00000038 48%,
+      #000000b5 100%
+    ),
+    linear-gradient(
+      180deg,
+      #03060755 0%,
+      transparent 30%,
+      #03060730 70%,
+      #030607b0 100%
     );
 }
 
-.tree {
-  position: absolute;
-  bottom: -12vh;
-  left: var(--x);
-  width: var(--w);
-  height: var(--h);
-  opacity: var(--o);
-  transform: rotate(var(--lean));
-  transform-origin: bottom center;
-  filter: blur(var(--blur));
-}
-
-.trunk {
-  position: absolute;
-  bottom: 0;
-  left: 44%;
-  width: 13%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    #030505,
-    #101719,
-    #030505
-  );
-}
-
-.branch {
-  position: absolute;
-  bottom: var(--bottom);
-  left: 49%;
-  width: var(--bw);
-  height: var(--bh);
-  background: #050809;
-  transform-origin: bottom center;
-  transform: rotate(var(--angle));
-}
-
-.branch::after {
-  content: "";
-  position: absolute;
-  top: 12%;
-  left: 0;
-  width: 75%;
-  height: 55%;
-  background: inherit;
-  transform: rotate(35deg);
-  transform-origin: top center;
-}
-
-.fog {
-  position: absolute;
-  left: -25%;
-  width: 150%;
-  height: 46%;
-  bottom: 5%;
-  background: radial-gradient(
-    ellipse at center,
-    #a1b2b322 0%,
-    #7d969612 35%,
-    transparent 70%
-  );
-  filter: blur(45px);
-  animation: fogMove 35s ease-in-out infinite alternate;
-}
-
-.fog.second {
-  bottom: 30%;
-  opacity: .6;
-  animation-duration: 47s;
-  animation-direction: alternate-reverse;
-}
-
-@keyframes fogMove {
-  from { transform: translateX(-10%); }
-  to { transform: translateX(10%); }
-}
-
-.vignette {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    ellipse at 50% 45%,
-    transparent 12%,
-    #000000a8 100%
-  );
-}
-
-.grain {
-  position: absolute;
-  inset: 0;
-  opacity: .13;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent 0px,
-    #ffffff0a 1px,
-    transparent 2px,
-    transparent 5px
-  );
-}
-
-/* ANA SAYFA */
+/* SAYFA */
 .page {
   position: relative;
   z-index: 1;
@@ -161,30 +73,31 @@ button {
 }
 
 header {
-  padding: 34px 6%;
   display: flex;
   justify-content: flex-end;
+  padding: 34px 6%;
 }
 
 .connected {
-  color: #c2b9b7;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  color: #c7bfbb;
   font-size: 10px;
   letter-spacing: 4px;
 }
 
 .connected::before {
   content: "";
-  display: inline-block;
   width: 7px;
   height: 7px;
-  margin-right: 13px;
-  border-radius: 50%;
   background: var(--red);
-  box-shadow: 0 0 12px #852c3777;
-  animation: blink 3.5s infinite;
+  border-radius: 50%;
+  box-shadow: 0 0 12px #963b4566;
+  animation: pulse 3.5s infinite;
 }
 
-@keyframes blink {
+@keyframes pulse {
   50% { opacity: .35; }
 }
 
@@ -193,17 +106,17 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 35px 20px 90px;
+  padding: 45px 22px 90px;
 }
 
 .content {
   width: 100%;
-  max-width: 940px;
+  max-width: 950px;
   text-align: center;
-  animation: fadeIn 2s ease both;
+  animation: reveal 1.8s ease both;
 }
 
-@keyframes fadeIn {
+@keyframes reveal {
   from {
     opacity: 0;
     transform: translateY(14px);
@@ -216,48 +129,45 @@ main {
 
 h1 {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: clamp(75px, 10vw, 130px);
+  font-size: clamp(76px, 10vw, 132px);
   font-weight: 400;
   font-style: normal;
   letter-spacing: -.085em;
   line-height: 1;
+  text-shadow: 0 3px 28px #000a;
 }
 
-h1 span {
-  color: #a12e3c;
-}
+h1 span { color: #a73542; }
 
 .quote {
-  max-width: 720px;
-  margin: 36px auto 0;
-  color: #d1c9c6;
-  font-size: clamp(12px, 1.45vw, 16px);
+  max-width: 760px;
+  margin: 37px auto 0;
+  color: #d7d0cb;
+  font-size: clamp(12px, 1.4vw, 16px);
   font-weight: 400;
   font-style: normal;
   line-height: 2;
-  letter-spacing: .14em;
+  letter-spacing: .12em;
+  text-shadow: 0 2px 12px #000;
 }
 
 .author {
   display: block;
-  margin-top: 17px;
-  color: #b7a9a5;
+  margin-top: 18px;
+  color: #c0b5b0;
   font-size: 10px;
-  font-style: normal;
-  letter-spacing: 5px;
+  letter-spacing: 4px;
 }
 
-/* SADE ÇİZGİ — YILDIZ YOK */
 .divider {
-  width: min(550px, 78%);
+  width: min(540px, 78%);
   height: 1px;
-  margin: 53px auto 48px;
+  margin: 54px auto 48px;
   background: linear-gradient(
     90deg,
     transparent,
-    #74313a 25%,
-    #74313a 75%,
+    #71343c 25%,
+    #71343c 75%,
     transparent
   );
 }
@@ -265,75 +175,74 @@ h1 span {
 /* KLASÖRLER */
 .folders {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
   gap: 24px;
   max-width: 760px;
   margin: auto;
 }
 
 .folder {
-  position: relative;
+  min-height: 108px;
+  padding: 24px 27px;
   display: flex;
   align-items: center;
-  gap: 24px;
-  min-height: 108px;
-  padding: 24px 28px;
+  gap: 22px;
+  background: #080b0bd9;
+  border: 1px solid #80726d;
+  color: var(--text);
   text-align: left;
-  color: var(--paper);
-  background: #080a0bc9;
-  border: 1px solid #77706c;
-  transition: .3s ease;
+  transition:
+    transform .3s,
+    background .3s,
+    border-color .3s;
 }
 
-.folder:hover {
-  border-color: #b89b9d;
-  background: #171316eb;
+.folder:hover,
+.folder:focus-visible {
   transform: translateY(-3px);
+  background: #20171ae8;
+  border-color: #c29a9e;
+  outline: none;
 }
 
 .folder-icon {
-  width: 37px;
-  height: 37px;
+  width: 36px;
+  height: 36px;
   flex-shrink: 0;
   fill: none;
-  stroke: #d1c4bc;
+  stroke: #d6c9c0;
   stroke-width: 1.3;
 }
 
-.folder-info {
-  flex: 1;
-}
+.folder-info { flex: 1; }
 
-.folder-title {
+.folder-name {
   display: block;
   font-size: 23px;
   letter-spacing: 3px;
-  font-weight: 400;
 }
 
 .folder-sub {
   display: block;
   margin-top: 9px;
+  color: #b5aaa4;
   font-size: 9px;
   letter-spacing: 2.5px;
-  color: #a9a09d;
 }
 
-/* MODERN / RETRO OK */
 .arrow {
-  width: 24px;
-  height: 24px;
+  width: 23px;
+  height: 23px;
   flex-shrink: 0;
-  stroke: #b8aba7;
   fill: none;
-  stroke-width: 1.25;
-  stroke-linecap: square;
+  stroke: #c2b3ac;
+  stroke-width: 1.3;
   transition: transform .3s, stroke .3s;
 }
 
 .folder:hover .arrow {
-  transform: translateX(5px);
-  stroke: #c27a85;
+  transform: translateX(6px);
+  stroke: #cf8791;
 }
 
 /* ALT BAR */
@@ -342,7 +251,7 @@ footer {
   justify-content: space-between;
   align-items: center;
   padding: 25px 6%;
-  color: #a59a96;
+  color: #c0b5ae;
   font-size: 10px;
   letter-spacing: 3px;
 }
@@ -350,17 +259,15 @@ footer {
 .sound {
   border: 0;
   background: transparent;
-  color: #c4b8b3;
+  color: inherit;
   font-size: 10px;
   letter-spacing: 2px;
   padding: 10px;
 }
 
-.sound:hover {
-  color: white;
-}
+.sound:hover { color: white; }
 
-/* AÇILAN PENCERELER */
+/* PENCERELER */
 .window {
   display: none;
   position: fixed;
@@ -369,15 +276,13 @@ footer {
   transform: translate(-50%, -50%);
   width: 430px;
   max-width: 90vw;
-  background: #0d0e10f5;
-  border: 1px solid #76585d;
+  background: #0c0e10f5;
+  border: 1px solid #79575e;
   box-shadow: 0 25px 100px #000e;
-  z-index: 20;
+  z-index: 30;
 }
 
-.window.open {
-  display: block;
-}
+.window.open { display: block; }
 
 .window-head {
   display: flex;
@@ -385,46 +290,39 @@ footer {
   align-items: center;
   padding: 17px 21px;
   background: #24171b;
-  border-bottom: 1px solid #76585d;
+  border-bottom: 1px solid #79575e;
   font-size: 11px;
   letter-spacing: 3px;
 }
 
 .window-head button {
   border: 0;
-  background: none;
-  color: #e9e1dc;
-  font-size: 23px;
+  background: transparent;
+  color: #e8e0db;
+  font-size: 24px;
   line-height: 1;
 }
 
-.window-links {
-  padding: 17px 27px;
-}
+.window-links { padding: 17px 27px; }
 
 .window-link {
-  width: 100%;
-  padding: 22px 5px;
-  border: 0;
-  border-bottom: 1px solid #383134;
-  background: transparent;
-  color: #e6ded9;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  text-align: left;
+  width: 100%;
+  padding: 22px 5px;
+  border: 0;
+  border-bottom: 1px solid #393236;
+  background: transparent;
+  color: #e8e0db;
   font-size: 13px;
   letter-spacing: 3px;
-  transition: color .2s;
+  text-align: left;
 }
 
-.window-link:last-child {
-  border-bottom: 0;
-}
+.window-link:last-child { border: 0; }
 
-.window-link:hover {
-  color: #c68892;
-}
+.window-link:hover { color: #d1909a; }
 
 .window-link svg {
   width: 20px;
@@ -432,7 +330,7 @@ footer {
   fill: none;
   stroke: currentColor;
   stroke-width: 1.3;
-  transition: transform .2s;
+  transition: transform .25s;
 }
 
 .window-link:hover svg {
@@ -440,47 +338,19 @@ footer {
 }
 
 @media(max-width: 700px) {
-  header {
-    padding: 25px 7%;
-  }
-
-  main {
-    padding: 35px 22px 70px;
-  }
-
-  h1 {
-    font-size: clamp(70px, 16vw, 100px);
-  }
-
-  .quote {
-    line-height: 1.9;
-    letter-spacing: .06em;
-  }
-
-  .author {
-    letter-spacing: 3px;
-  }
-
-  .divider {
-    margin: 40px auto 35px;
-  }
-
+  header { padding: 25px 7%; }
+  main { padding: 40px 22px 70px; }
+  h1 { font-size: clamp(72px, 16vw, 100px); }
+  .quote { letter-spacing: .06em; }
+  .author { letter-spacing: 3px; }
+  .divider { margin: 40px auto 35px; }
   .folders {
     grid-template-columns: 1fr;
-    gap: 15px;
     max-width: 420px;
+    gap: 15px;
   }
-
-  .folder {
-    min-height: 95px;
-    padding: 20px 24px;
-  }
-
-  footer {
-    padding: 22px 7%;
-    font-size: 9px;
-    letter-spacing: 1px;
-  }
+  .folder { min-height: 95px; padding: 20px 24px; }
+  footer { padding: 22px 7%; font-size: 9px; letter-spacing: 1px; }
 }
 
 @media(prefers-reduced-motion: reduce) {
@@ -494,22 +364,16 @@ footer {
 
 <body>
 
-<div class="forest" id="forest" aria-hidden="true">
-  <div class="fog"></div>
-  <div class="fog second"></div>
-  <div class="vignette"></div>
-  <div class="grain"></div>
-</div>
+<canvas id="forestCanvas" aria-hidden="true"></canvas>
+<div class="forest-shade"></div>
 
 <div class="page">
-
   <header>
     <div class="connected">CONNECTED</div>
   </header>
 
   <main>
     <section class="content">
-
       <h1>zmey<span>.</span></h1>
 
       <p class="quote">
@@ -523,164 +387,316 @@ footer {
       <div class="divider"></div>
 
       <nav class="folders" aria-label="ZMEY bağlantıları">
-
         <button class="folder" onclick="openWindow('games')">
-          <svg class="folder-icon" viewBox="0 0 48 48">
+          <svg class="folder-icon" viewBox="0 0 48 48" aria-hidden="true">
             <path d="M4 13h16l6 6h18v23H4z"/>
             <path d="M4 19h40"/>
           </svg>
-
           <span class="folder-info">
-            <span class="folder-title">games/</span>
+            <span class="folder-name">games/</span>
             <span class="folder-sub">STEAM · KICK</span>
           </span>
-
-          <svg class="arrow" viewBox="0 0 24 24">
+          <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M4 12h15M13 6l6 6-6 6"/>
           </svg>
         </button>
 
         <button class="folder" onclick="openWindow('videos')">
-          <svg class="folder-icon" viewBox="0 0 48 48">
+          <svg class="folder-icon" viewBox="0 0 48 48" aria-hidden="true">
             <path d="M4 13h16l6 6h18v23H4z"/>
             <path d="M4 19h40"/>
           </svg>
-
           <span class="folder-info">
-            <span class="folder-title">videos/</span>
+            <span class="folder-name">videos/</span>
             <span class="folder-sub">YOUTUBE · INSTAGRAM</span>
           </span>
-
-          <svg class="arrow" viewBox="0 0 24 24">
+          <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M4 12h15M13 6l6 6-6 6"/>
           </svg>
         </button>
-
       </nav>
     </section>
   </main>
 
   <footer>
     <span>NO SIGNAL / 00:00</span>
-    <button class="sound" id="soundButton"
-      onclick="toggleSound()">◌ SOUND OFF</button>
+    <button class="sound" id="soundButton" onclick="toggleSound()">
+      ◌ SOUND OFF
+    </button>
   </footer>
-
 </div>
 
-<div class="window" id="games" role="dialog"
-     aria-label="Games bağlantıları">
-
+<div class="window" id="games" role="dialog" aria-label="Games">
   <div class="window-head">
     <span>GAMES</span>
-    <button onclick="closeWindow('games')"
-      aria-label="Kapat">×</button>
+    <button onclick="closeWindow('games')" aria-label="Kapat">×</button>
   </div>
-
   <div class="window-links">
-
     <button class="window-link" onclick="comingSoon('Steam')">
       STEAM
-      <svg viewBox="0 0 24 24">
-        <path d="M5 19 19 5M8 5h11v11"/>
-      </svg>
+      <svg viewBox="0 0 24 24"><path d="M5 19 19 5M8 5h11v11"/></svg>
     </button>
-
     <button class="window-link" onclick="comingSoon('Kick')">
       KICK
-      <svg viewBox="0 0 24 24">
-        <path d="M5 19 19 5M8 5h11v11"/>
-      </svg>
+      <svg viewBox="0 0 24 24"><path d="M5 19 19 5M8 5h11v11"/></svg>
     </button>
-
   </div>
 </div>
 
-<div class="window" id="videos" role="dialog"
-     aria-label="Videos bağlantıları">
-
+<div class="window" id="videos" role="dialog" aria-label="Videos">
   <div class="window-head">
     <span>VIDEOS</span>
-    <button onclick="closeWindow('videos')"
-      aria-label="Kapat">×</button>
+    <button onclick="closeWindow('videos')" aria-label="Kapat">×</button>
   </div>
-
   <div class="window-links">
-
     <button class="window-link" onclick="comingSoon('YouTube')">
       YOUTUBE
-      <svg viewBox="0 0 24 24">
-        <path d="M5 19 19 5M8 5h11v11"/>
-      </svg>
+      <svg viewBox="0 0 24 24"><path d="M5 19 19 5M8 5h11v11"/></svg>
     </button>
-
     <button class="window-link" onclick="comingSoon('Instagram')">
       INSTAGRAM
-      <svg viewBox="0 0 24 24">
-        <path d="M5 19 19 5M8 5h11v11"/>
-      </svg>
+      <svg viewBox="0 0 24 24"><path d="M5 19 19 5M8 5h11v11"/></svg>
     </button>
-
   </div>
 </div>
 
 <script>
-/* ORMAN AĞAÇLARI */
-const forest = document.getElementById("forest");
+/* SİNEMATİK ORMAN MOTORU */
+const canvas = document.getElementById("forestCanvas");
+const ctx = canvas.getContext("2d", { alpha: false });
 
-function random(seed) {
-  const x = Math.sin(seed * 127.1) * 43758.5453;
-  return x - Math.floor(x);
+let W = 0;
+let H = 0;
+let dpr = 1;
+let lastTime = 0;
+let elapsed = 0;
+let trees = [];
+
+const reduceMotion = window.matchMedia(
+  "(prefers-reduced-motion: reduce)"
+).matches;
+
+function rnd(n) {
+  const v = Math.sin(n * 127.1 + 42.7) * 43758.5453;
+  return v - Math.floor(v);
 }
 
-for (let i = 0; i < 48; i++) {
-  const tree = document.createElement("div");
-  tree.className = "tree";
+function resize() {
+  dpr = Math.min(window.devicePixelRatio || 1, 2);
+  W = window.innerWidth;
+  H = window.innerHeight;
 
-  const depth = random(i + 10);
-  const height = 65 + depth * 90;
-  const width = 35 + depth * 90;
+  canvas.width = Math.round(W * dpr);
+  canvas.height = Math.round(H * dpr);
 
-  tree.style.setProperty(
-    "--x", (random(i + 100) * 120 - 10) + "%"
-  );
-  tree.style.setProperty("--h", height + "vh");
-  tree.style.setProperty("--w", width + "px");
-  tree.style.setProperty("--o", .2 + depth * .75);
-  tree.style.setProperty(
-    "--lean", (random(i + 300) * 12 - 6) + "deg"
-  );
-  tree.style.setProperty(
-    "--blur", (1 - depth) * 2.5 + "px"
-  );
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-  let branches = "";
+  trees = [];
 
-  for (let b = 0; b < 7; b++) {
-    const angle = (b % 2 === 0 ? -1 : 1) *
-      (28 + random(i * 10 + b) * 45);
+  for (let i = 0; i < 85; i++) {
+    const depth = .12 + rnd(i + 10) * .88;
 
-    branches += `
-      <div class="branch" style="
-        --bottom:${35 + b * 8}%;
-        --bh:${25 + random(i + b) * 25}%;
-        --bw:${3 + depth * 3}px;
-        --angle:${angle}deg;
-      "></div>
-    `;
+    trees.push({
+      x: rnd(i + 200) * 1.6 - .3,
+      depth,
+      height: .7 + rnd(i + 400) * 1.1,
+      lean: (rnd(i + 500) - .5) * .13,
+      seed: rnd(i + 700) * 100,
+      branches: 5 + Math.floor(rnd(i + 900) * 6)
+    });
   }
 
-  tree.innerHTML = `<div class="trunk"></div>${branches}`;
-
-  forest.insertBefore(tree, forest.firstChild);
+  trees.sort((a, b) => a.depth - b.depth);
 }
 
-/* KLASÖR PENCERELERİ */
+window.addEventListener("resize", resize);
+resize();
+
+function drawTree(tree, t) {
+  const depth = tree.depth;
+
+  /* Yavaş ileri hareket / parallax */
+  const travel = reduceMotion ? 0 :
+    (Math.sin(t * .00012) * .025);
+
+  const perspective = depth + travel * depth;
+
+  const scale = .25 + perspective * 1.9;
+  const x = (tree.x - .5) * W * scale + W / 2;
+  const baseY = H * (.73 + perspective * .37);
+  const height = H * tree.height * scale;
+  const trunkWidth = Math.max(1.5, 3 + perspective * 15);
+
+  const sway = reduceMotion ? 0 :
+    Math.sin(t * .00035 + tree.seed) * (2 + depth * 4);
+
+  const darkness = Math.floor(18 - depth * 15);
+  const alpha = .22 + depth * .76;
+
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.translate(x, baseY);
+
+  ctx.strokeStyle =
+    `rgb(${darkness},${darkness + 4},${darkness + 5})`;
+  ctx.lineCap = "round";
+
+  /* Gövde */
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.bezierCurveTo(
+    sway * .2, -height * .35,
+    sway + tree.lean * height, -height * .75,
+    sway + tree.lean * height * 1.4, -height
+  );
+  ctx.lineWidth = trunkWidth;
+  ctx.stroke();
+
+  /* Dallar */
+  for (let b = 0; b < tree.branches; b++) {
+    const p = .25 + b / tree.branches * .68;
+    const side = b % 2 === 0 ? -1 : 1;
+
+    const startX = sway * p + tree.lean * height * p;
+    const startY = -height * p;
+
+    const length = height * (.14 + rnd(b + tree.seed) * .18);
+    const angle = side * (.5 + rnd(b + tree.seed + 50) * .5);
+
+    const endX = startX + Math.sin(angle) * length;
+    const endY = startY - Math.cos(angle) * length;
+
+    ctx.beginPath();
+    ctx.moveTo(startX, startY);
+    ctx.quadraticCurveTo(
+      startX + (endX - startX) * .7,
+      startY - length * .1,
+      endX + sway * .3,
+      endY
+    );
+    ctx.lineWidth = Math.max(1, trunkWidth * (.35 - p * .2));
+    ctx.stroke();
+
+    /* Küçük yan dallar */
+    ctx.beginPath();
+    ctx.moveTo(
+      startX + (endX - startX) * .65,
+      startY + (endY - startY) * .65
+    );
+    ctx.lineTo(
+      endX + side * length * .16,
+      endY - length * .28
+    );
+    ctx.lineWidth = Math.max(.6, trunkWidth * .11);
+    ctx.stroke();
+  }
+
+  ctx.restore();
+}
+
+function drawFog(t, layer) {
+  const drift = reduceMotion ? 0 :
+    Math.sin(t * .0001 + layer * 2) * W * .12;
+
+  const y = H * (.36 + layer * .16);
+  const x = W * .5 + drift;
+
+  const fog = ctx.createRadialGradient(
+    x, y, 0,
+    x, y, W * .7
+  );
+
+  const opacity = layer === 0 ? .085 : .12;
+
+  fog.addColorStop(0, `rgba(157,177,177,${opacity})`);
+  fog.addColorStop(.45, `rgba(112,139,140,${opacity * .45})`);
+  fog.addColorStop(1, "rgba(112,139,140,0)");
+
+  ctx.fillStyle = fog;
+  ctx.fillRect(0, 0, W, H);
+}
+
+function drawBackground(t) {
+  const glow = reduceMotion ? 0 :
+    Math.sin(t * .0002) * .035;
+
+  const bg = ctx.createRadialGradient(
+    W * .5, H * .4, 0,
+    W * .5, H * .4, Math.max(W, H) * .85
+  );
+
+  bg.addColorStop(0, `rgb(
+    ${Math.floor(31 + glow * 30)},
+    ${Math.floor(41 + glow * 30)},
+    ${Math.floor(43 + glow * 30)}
+  )`);
+  bg.addColorStop(.55, "#10191b");
+  bg.addColorStop(1, "#030607");
+
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  /* Uzak ışık */
+  const light = ctx.createRadialGradient(
+    W * .52, H * .37, 0,
+    W * .52, H * .37, W * .5
+  );
+
+  light.addColorStop(0, "rgba(130,150,148,.10)");
+  light.addColorStop(1, "rgba(130,150,148,0)");
+
+  ctx.fillStyle = light;
+  ctx.fillRect(0, 0, W, H);
+}
+
+function drawGround() {
+  const ground = ctx.createLinearGradient(
+    0, H * .7, 0, H
+  );
+  ground.addColorStop(0, "rgba(3,6,7,0)");
+  ground.addColorStop(1, "rgba(2,4,5,.85)");
+
+  ctx.fillStyle = ground;
+  ctx.fillRect(0, H * .7, W, H * .3);
+}
+
+function render(time) {
+  const delta = lastTime ? Math.min(time - lastTime, 50) : 16;
+  lastTime = time;
+  elapsed += delta;
+
+  drawBackground(elapsed);
+
+  /* Uzak ağaçlar */
+  trees.filter(tree => tree.depth < .48)
+    .forEach(tree => drawTree(tree, elapsed));
+
+  drawFog(elapsed, 0);
+
+  /* Orta katman */
+  trees.filter(tree => tree.depth >= .48 && tree.depth < .78)
+    .forEach(tree => drawTree(tree, elapsed));
+
+  drawFog(elapsed, 1);
+
+  /* Yakın ağaçlar */
+  trees.filter(tree => tree.depth >= .78)
+    .forEach(tree => drawTree(tree, elapsed));
+
+  drawGround();
+
+  if (!reduceMotion) {
+    requestAnimationFrame(render);
+  }
+}
+
+requestAnimationFrame(render);
+
+/* PENCERELER */
 function openWindow(id) {
   document.querySelectorAll(".window").forEach(w => {
     w.classList.remove("open");
   });
-
   document.getElementById(id).classList.add("open");
 }
 
@@ -692,7 +708,7 @@ function comingSoon(name) {
   alert(name + " bağlantısı yakında eklenecek.");
 }
 
-/* ORİJİNAL, HAFİF AMBIENT SES */
+/* ORİJİNAL AMBIENT SES */
 let audioContext = null;
 let soundNodes = [];
 let soundOn = false;
@@ -704,7 +720,6 @@ function toggleSound() {
     soundNodes.forEach(node => {
       try { node.stop(); } catch (e) {}
     });
-
     soundNodes = [];
     soundOn = false;
     button.textContent = "◌ SOUND OFF";
@@ -727,7 +742,7 @@ function toggleSound() {
     audioContext.resume();
 
     const master = audioContext.createGain();
-    master.gain.value = 0.025;
+    master.gain.value = .025;
     master.connect(audioContext.destination);
 
     [55, 82.41, 110].forEach((frequency, i) => {
