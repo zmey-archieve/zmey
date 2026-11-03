@@ -3,298 +3,316 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#09090b">
 <title>ZMEY — Personal Hub</title>
 
 <style>
 :root {
-  --bg:#09090b;
-  --fg:#ede8e2;
-  --muted:#8d878a;
-  --line:#393136;
-  --wine:#51242e;
-  --accent:#bd7984;
+  --bg: #09090b;
+  --fg: #ede8e2;
+  --muted: #8d878a;
+  --line: #393136;
+  --wine: #51242e;
+  --accent: #bd7984;
 }
 
-* { box-sizing:border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
-  margin:0;
-  min-height:100svh;
-  background:var(--bg);
-  color:var(--fg);
-  font-family:Arial,Helvetica,sans-serif;
-  overflow-x:hidden;
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100svh;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 body::before {
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  background:
-    radial-gradient(
-      ellipse at 80% 85%,
-      #32131a25,
-      transparent 55%
-    );
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at 80% 85%,
+    #32131a25,
+    transparent 55%
+  );
 }
 
-button { font:inherit; cursor:pointer; }
+button {
+  font: inherit;
+  cursor: pointer;
+}
 
 .topbar {
-  height:65px;
-  padding:0 4%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border-bottom:1px solid var(--line);
-  font-size:10px;
-  letter-spacing:3px;
-  position:relative;
-  z-index:1;
+  height: 65px;
+  padding: 0 4%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+  font-size: 10px;
+  letter-spacing: 3px;
 }
 
-.topbar span:last-child { color:var(--muted); }
+.topbar span:last-child {
+  color: var(--muted);
+}
 
 .desktop {
-  position:relative;
-  min-height:calc(100svh - 120px);
-  padding:65px 5% 100px;
+  position: relative;
+  min-height: calc(100svh - 120px);
+  padding: 65px 5% 100px;
 }
 
 .folders {
-  position:absolute;
-  left:5%;
-  top:65px;
-  display:flex;
-  flex-direction:column;
-  gap:36px;
+  position: absolute;
+  top: 65px;
+  left: 5%;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
 }
 
 .folder {
-  width:95px;
-  padding:8px;
-  background:none;
-  border:1px solid transparent;
-  color:var(--fg);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:13px;
-  font-size:11px;
-  letter-spacing:2px;
-  transition:.2s;
+  width: 95px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 13px;
+  background: none;
+  border: 1px solid transparent;
+  color: var(--fg);
+  font-size: 11px;
+  letter-spacing: 2px;
+  transition: 0.2s;
 }
 
 .folder:hover,
 .folder:focus-visible {
-  background:#ffffff09;
-  border-color:#57454b;
-  outline:none;
+  background: #ffffff09;
+  border-color: #57454b;
+  outline: none;
 }
 
 .folder svg {
-  width:59px;
-  height:53px;
-  fill:#272326;
-  stroke:#d3c8c1;
-  stroke-width:1.5;
+  width: 59px;
+  height: 53px;
+  fill: #272326;
+  stroke: #d3c8c1;
+  stroke-width: 1.5;
 }
 
 .hero {
-  max-width:900px;
-  margin:55px auto 0;
-  text-align:center;
-  position:relative;
-  z-index:1;
+  max-width: 900px;
+  margin: 55px auto 0;
+  text-align: center;
 }
 
 .eyebrow {
-  color:var(--accent);
-  font-size:10px;
-  letter-spacing:5px;
-  margin-bottom:26px;
+  margin-bottom: 26px;
+  color: var(--accent);
+  font-size: 10px;
+  letter-spacing: 5px;
 }
 
 h1 {
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  font-weight:600;
-  font-size:clamp(80px,13vw,190px);
-  line-height:1;
-  letter-spacing:-.095em;
-  padding-right:.095em;
+  margin: 0;
+  font-weight: 600;
+  font-size: clamp(65px, 11vw, 155px);
+  line-height: 1.05;
+  letter-spacing: -0.075em;
+}
+
+.test-label {
+  display: inline-block;
+  margin-top: 22px;
+  padding: 8px 16px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-size: 10px;
+  letter-spacing: 3px;
 }
 
 .quote {
-  margin:36px auto 0;
-  max-width:650px;
-  color:#c8bec0;
-  font-family:Georgia,serif;
-  font-size:clamp(13px,1.4vw,17px);
-  line-height:1.8;
-  letter-spacing:.055em;
+  max-width: 650px;
+  margin: 36px auto 0;
+  color: #c8bec0;
+  font-family: Georgia, serif;
+  font-size: clamp(13px, 1.4vw, 17px);
+  line-height: 1.8;
+  letter-spacing: 0.055em;
 }
 
 .author {
-  display:block;
-  margin-top:14px;
-  color:var(--muted);
-  font-family:Arial,Helvetica,sans-serif;
-  font-size:10px;
-  letter-spacing:4px;
+  display: block;
+  margin-top: 14px;
+  color: var(--muted);
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  letter-spacing: 4px;
 }
 
 .hero-line {
-  width:65px;
-  height:1px;
-  margin:43px auto;
-  background:var(--wine);
+  width: 65px;
+  height: 1px;
+  margin: 43px auto;
+  background: var(--wine);
 }
 
 .status {
-  font-size:10px;
-  letter-spacing:3px;
-  color:#655c60;
+  color: #655c60;
+  font-size: 10px;
+  letter-spacing: 3px;
 }
 
 .window {
-  display:none;
-  position:fixed;
-  top:28%;
-  left:34%;
-  width:430px;
-  max-width:90vw;
-  background:#121012;
-  border:1px solid #68464e;
-  box-shadow:0 30px 100px #000c;
-  z-index:10;
+  display: none;
+  position: fixed;
+  top: 28%;
+  left: 34%;
+  width: 430px;
+  max-width: 90vw;
+  background: #121012;
+  border: 1px solid #68464e;
+  box-shadow: 0 30px 100px #000c;
+  z-index: 10;
 }
 
-.window.open { display:block; }
+.window.open {
+  display: block;
+}
 
 .windowbar {
-  background:linear-gradient(90deg,#411a23,#23171c);
-  border-bottom:1px solid #68464e;
-  padding:14px 17px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  cursor:move;
-  user-select:none;
-  touch-action:none;
-  font-size:11px;
-  letter-spacing:3px;
+  padding: 14px 17px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, #411a23, #23171c);
+  border-bottom: 1px solid #68464e;
+  cursor: move;
+  user-select: none;
+  touch-action: none;
+  font-size: 11px;
+  letter-spacing: 3px;
 }
 
 .windowbar button {
-  border:0;
-  background:transparent;
-  color:var(--fg);
-  font-size:23px;
-  line-height:1;
+  background: transparent;
+  border: 0;
+  color: var(--fg);
+  font-size: 23px;
+  line-height: 1;
 }
 
-.windowbody { padding:20px 25px; }
+.windowbody {
+  padding: 20px 25px;
+}
 
 .window-note {
-  margin:0 0 10px;
-  color:var(--muted);
-  font-size:10px;
-  letter-spacing:2px;
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 2px;
 }
 
 .link {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  width:100%;
-  padding:22px 4px;
-  background:none;
-  border:0;
-  border-bottom:1px solid var(--line);
-  color:var(--fg);
-  text-align:left;
-  font-size:14px;
-  letter-spacing:3px;
-  transition:.2s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 22px 4px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--fg);
+  text-align: left;
+  font-size: 14px;
+  letter-spacing: 3px;
+  transition: 0.2s;
 }
 
-.link:last-child { border-bottom:0; }
-.link:hover { color:var(--accent); }
+.link:last-child {
+  border-bottom: 0;
+}
+
+.link:hover {
+  color: var(--accent);
+}
 
 .link small {
-  color:var(--muted);
-  font-size:10px;
-  letter-spacing:1px;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 1px;
 }
 
 .footer {
-  min-height:55px;
-  padding:18px 4%;
-  border-top:1px solid var(--line);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-  color:var(--muted);
-  font-size:10px;
-  letter-spacing:2px;
+  min-height: 55px;
+  padding: 18px 4%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 2px;
 }
 
-@media(max-width:700px) {
-  .topbar { padding:0 6%; }
-
+@media (max-width: 700px) {
   .desktop {
-    padding:25px 6% 85px;
-    min-height:calc(100svh - 120px);
+    padding: 25px 6% 85px;
   }
 
   .folders {
-    position:relative;
-    top:auto;
-    left:auto;
-    flex-direction:row;
-    gap:18px;
+    position: relative;
+    top: auto;
+    left: auto;
+    flex-direction: row;
+    gap: 18px;
   }
 
   .folder {
-    width:85px;
-    font-size:10px;
+    width: 85px;
+    font-size: 10px;
   }
 
   .folder svg {
-    width:48px;
-    height:45px;
+    width: 48px;
+    height: 45px;
   }
 
-  .hero { margin:75px auto 0; }
+  .hero {
+    margin: 75px auto 0;
+  }
 
   h1 {
-    font-size:clamp(65px,17vw,110px);
+    font-size: clamp(54px, 13vw, 90px);
   }
 
   .eyebrow {
-    font-size:9px;
-    letter-spacing:3px;
+    font-size: 9px;
+    letter-spacing: 3px;
   }
-
-  .quote { margin-top:30px; }
 
   .window {
-    top:22%!important;
-    left:5%!important;
-    width:90vw;
-    max-width:none;
+    top: 22% !important;
+    left: 5% !important;
+    width: 90vw;
+    max-width: none;
   }
 
-  .windowbar { cursor:default; }
+  .windowbar {
+    cursor: default;
+  }
 
   .footer {
-    font-size:9px;
-    letter-spacing:1px;
+    font-size: 9px;
+    letter-spacing: 1px;
   }
 }
 </style>
@@ -312,8 +330,7 @@ h1 {
   <nav class="folders" aria-label="Klasörler">
 
     <button class="folder"
-      onclick="openWin('gamesWin')"
-      aria-label="Games klasörünü aç">
+      onclick="openWin('gamesWin')">
       <svg viewBox="0 0 64 64" aria-hidden="true">
         <path d="M5 17h22l7 8h25v29H5z"/>
         <path d="M5 25h54" fill="none"/>
@@ -324,15 +341,14 @@ h1 {
     </button>
 
     <button class="folder"
-      onclick="openWin('videosWin')"
-      aria-label="Videos klasörünü aç">
+      onclick="openWin('videosWin')">
       <svg viewBox="0 0 64 64" aria-hidden="true">
         <path d="M5 17h22l7 8h25v29H5z"/>
         <path d="M5 25h54" fill="none"/>
         <rect x="20" y="33" width="25" height="16"
           rx="2" fill="none"/>
-        <path d="m30 36 8 5-8 5z" fill="#d3c8c1"
-          stroke="none"/>
+        <path d="m30 36 8 5-8 5z"
+          fill="#d3c8c1" stroke="none"/>
       </svg>
       VIDEOS
     </button>
@@ -341,10 +357,14 @@ h1 {
 
   <section class="hero">
     <div class="eyebrow">
-      プレイヤー / PLAYER PROFILE
+      PLAYER PROFILE / 001
     </div>
 
-    <h1>ZMEY.</h1>
+    <h1>ZMEY TEST.</h1>
+
+    <div class="test-label">
+      NEW VERSION / TEST
+    </div>
 
     <p class="quote">
       “Hatred is born when people gather together.”
@@ -353,13 +373,15 @@ h1 {
 
     <div class="hero-line"></div>
 
-    <div class="status">ONLINE / EST. 2026</div>
+    <div class="status">
+      ONLINE / EST. 2026
+    </div>
   </section>
 
 </main>
 
 <section class="window" id="gamesWin"
-  role="dialog" aria-label="Games bağlantıları">
+  role="dialog" aria-label="Games">
 
   <div class="windowbar">
     <span>◈ &nbsp; GAMES</span>
@@ -370,18 +392,20 @@ h1 {
   <div class="windowbody">
     <p class="window-note">GAMING / SOCIAL</p>
 
-    <button class="link" onclick="comingSoon('Steam')">
+    <button class="link"
+      onclick="comingSoon('Steam')">
       STEAM <small>PROFILE ↗</small>
     </button>
 
-    <button class="link" onclick="comingSoon('Kick')">
+    <button class="link"
+      onclick="comingSoon('Kick')">
       KICK <small>CHANNEL ↗</small>
     </button>
   </div>
 </section>
 
 <section class="window" id="videosWin"
-  role="dialog" aria-label="Videos bağlantıları">
+  role="dialog" aria-label="Videos">
 
   <div class="windowbar">
     <span>▷ &nbsp; VIDEOS</span>
@@ -392,11 +416,13 @@ h1 {
   <div class="windowbody">
     <p class="window-note">CONTENT / SOCIAL</p>
 
-    <button class="link" onclick="comingSoon('Instagram')">
+    <button class="link"
+      onclick="comingSoon('Instagram')">
       INSTAGRAM <small>PROFILE ↗</small>
     </button>
 
-    <button class="link" onclick="comingSoon('YouTube')">
+    <button class="link"
+      onclick="comingSoon('YouTube')">
       YOUTUBE <small>CHANNEL ↗</small>
     </button>
   </div>
@@ -475,4 +501,3 @@ document.querySelectorAll('.window').forEach(win => {
 
 </body>
 </html>
-<!-- Cloudflare deployment test -->
