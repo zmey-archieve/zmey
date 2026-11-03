@@ -4,500 +4,468 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#09090b">
-<title>ZMEY — Personal Hub</title>
-
+<meta name="theme-color" content="#080a0b">
+<title>zmey.</title>
 <style>
 :root {
-  --bg: #09090b;
-  --fg: #ede8e2;
-  --muted: #8d878a;
-  --line: #393136;
-  --wine: #51242e;
-  --accent: #bd7984;
+  --white: #ded9d3;
+  --muted: #938d8b;
+  --red: #752b34;
 }
-
-* {
-  box-sizing: border-box;
-}
-
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
 body {
-  margin: 0;
-  min-height: 100vh;
-  min-height: 100svh;
-  background: var(--bg);
-  color: var(--fg);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #080a0b;
+  color: var(--white);
+  font-family: Georgia, "Times New Roman", serif;
+  overflow-x: hidden;
 }
+button { font: inherit; cursor: pointer; }
 
-body::before {
-  content: "";
+/* TAMAMEN KODLA ÇİZİLEN ORMAN */
+.forest {
   position: fixed;
   inset: 0;
-  pointer-events: none;
+  overflow: hidden;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 50% 65%, #252c2c 0%, #101617 45%, #050607 100%);
+}
+.tree {
+  position: absolute;
+  bottom: -10%;
+  width: var(--w);
+  height: var(--h);
+  left: var(--x);
+  opacity: var(--opacity);
+  transform-origin: bottom center;
+}
+.trunk {
+  position: absolute;
+  bottom: 0;
+  left: 45%;
+  width: 12%;
+  height: 100%;
+  background: linear-gradient(90deg, #030506, #13191a, #030506);
+  transform: rotate(var(--lean));
+}
+.branch {
+  position: absolute;
+  width: 5%;
+  height: 55%;
+  bottom: 38%;
+  left: 50%;
+  background: #06090a;
+  transform-origin: bottom center;
+}
+.branch.left { transform: rotate(-37deg); }
+.branch.right { transform: rotate(39deg); }
+.branch.small-left {
+  height: 34%;
+  bottom: 57%;
+  transform: rotate(-62deg);
+}
+.branch.small-right {
+  height: 31%;
+  bottom: 62%;
+  transform: rotate(65deg);
+}
+.fog {
+  position: absolute;
+  width: 120%;
+  height: 45%;
+  left: -10%;
+  bottom: 5%;
   background: radial-gradient(
-    ellipse at 80% 85%,
-    #32131a25,
-    transparent 55%
+    ellipse,
+    #9ba4a416 0%,
+    #7b89890b 45%,
+    transparent 72%
+  );
+  filter: blur(38px);
+  animation: drift 28s ease-in-out infinite alternate;
+}
+.fog.two {
+  bottom: 27%;
+  opacity: .55;
+  animation-duration: 41s;
+  animation-direction: alternate-reverse;
+}
+@keyframes drift {
+  from { transform: translateX(-12%); }
+  to { transform: translateX(12%); }
+}
+.vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 15%,
+    #000000b8 100%
+  );
+}
+.grain {
+  position: absolute;
+  inset: 0;
+  opacity: .12;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    #ffffff0c 1px,
+    transparent 2px,
+    transparent 5px
   );
 }
 
-button {
-  font: inherit;
-  cursor: pointer;
-}
-
-.topbar {
-  height: 65px;
-  padding: 0 4%;
+/* SAYFA */
+.page {
+  min-height: 100svh;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--line);
-  font-size: 10px;
-  letter-spacing: 3px;
-}
-
-.topbar span:last-child {
-  color: var(--muted);
-}
-
-.desktop {
+  flex-direction: column;
   position: relative;
-  min-height: calc(100svh - 120px);
-  padding: 65px 5% 100px;
 }
-
-.folders {
-  position: absolute;
-  top: 65px;
-  left: 5%;
+.top {
   display: flex;
-  flex-direction: column;
-  gap: 36px;
+  justify-content: flex-end;
+  padding: 35px 6%;
 }
-
-.folder {
-  width: 95px;
-  padding: 8px;
+.connected {
+  font: 10px Arial, sans-serif;
+  letter-spacing: 4px;
+  color: #aaa1a0;
+}
+.dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--red);
+  margin-right: 14px;
+  box-shadow: 0 0 10px #752b3470;
+  animation: pulse 3s infinite;
+}
+@keyframes pulse {
+  50% { opacity: .3; }
+}
+main {
+  flex: 1;
+  width: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 13px;
-  background: none;
-  border: 1px solid transparent;
-  color: var(--fg);
-  font-size: 11px;
-  letter-spacing: 2px;
-  transition: 0.2s;
+  justify-content: center;
+  padding: 55px 20px 100px;
 }
-
-.folder:hover,
-.folder:focus-visible {
-  background: #ffffff09;
-  border-color: #57454b;
-  outline: none;
-}
-
-.folder svg {
-  width: 59px;
-  height: 53px;
-  fill: #272326;
-  stroke: #d3c8c1;
-  stroke-width: 1.5;
-}
-
-.hero {
-  max-width: 900px;
-  margin: 55px auto 0;
+.content {
+  width: 100%;
+  max-width: 850px;
   text-align: center;
+  animation: appear 2.2s ease both;
 }
-
-.eyebrow {
-  margin-bottom: 26px;
-  color: var(--accent);
-  font-size: 10px;
-  letter-spacing: 5px;
+@keyframes appear {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-
 h1 {
   margin: 0;
-  font-weight: 600;
-  font-size: clamp(65px, 11vw, 155px);
-  line-height: 1.05;
-  letter-spacing: -0.075em;
+  font-size: clamp(72px, 10vw, 132px);
+  font-weight: normal;
+  letter-spacing: -.075em;
+  line-height: 1.1;
 }
-
-.test-label {
-  display: inline-block;
-  margin-top: 22px;
-  padding: 8px 16px;
-  border: 1px solid var(--accent);
-  color: var(--accent);
-  font-size: 10px;
-  letter-spacing: 3px;
-}
-
+h1 span { color: #842d38; }
 .quote {
-  max-width: 650px;
-  margin: 36px auto 0;
-  color: #c8bec0;
-  font-family: Georgia, serif;
-  font-size: clamp(13px, 1.4vw, 17px);
-  line-height: 1.8;
-  letter-spacing: 0.055em;
+  margin: 27px auto 0;
+  color: #c2bab7;
+  font-size: clamp(13px, 1.6vw, 17px);
+  font-style: italic;
+  letter-spacing: .065em;
+  line-height: 1.9;
 }
-
 .author {
   display: block;
-  margin-top: 14px;
-  color: var(--muted);
-  font-family: Arial, sans-serif;
-  font-size: 10px;
+  margin-top: 13px;
+  font: 10px Arial, sans-serif;
+  font-style: normal;
+  letter-spacing: 5px;
+  color: #918786;
+}
+.rule {
+  width: min(480px, 75%);
+  height: 1px;
+  margin: 58px auto 45px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #71303a,
+    transparent
+  );
+}
+.folders {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  max-width: 670px;
+  margin: auto;
+}
+.folder {
+  background: #090b0bb5;
+  border: 1px solid #62545490;
+  color: var(--white);
+  padding: 23px 27px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  transition: background .3s, border-color .3s, transform .3s;
+}
+.folder:hover {
+  background: #23181bdc;
+  border-color: #a46d75;
+  transform: translateY(-3px);
+}
+.folder svg {
+  width: 35px;
+  height: 35px;
+  fill: none;
+  stroke: #baa9a5;
+  stroke-width: 1.4;
+  flex-shrink: 0;
+}
+.folder-name {
+  display: block;
+  font-size: 24px;
+  letter-spacing: 3px;
+}
+.folder-sub {
+  display: block;
+  margin-top: 7px;
+  font: 10px Arial, sans-serif;
+  color: #a09896;
+  letter-spacing: 2px;
+}
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px 6%;
+  color: #a29a97;
+  font: 10px Arial, sans-serif;
   letter-spacing: 4px;
 }
-
-.hero-line {
-  width: 65px;
-  height: 1px;
-  margin: 43px auto;
-  background: var(--wine);
-}
-
-.status {
-  color: #655c60;
+.sound {
+  color: inherit;
+  background: transparent;
+  border: 0;
   font-size: 10px;
   letter-spacing: 3px;
 }
+.sound:hover { color: #eee; }
 
+/* AÇILAN PENCERELER */
 .window {
   display: none;
   position: fixed;
-  top: 28%;
-  left: 34%;
-  width: 430px;
+  top: 32%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 400px;
   max-width: 90vw;
-  background: #121012;
-  border: 1px solid #68464e;
-  box-shadow: 0 30px 100px #000c;
-  z-index: 10;
+  background: #0d0d0fee;
+  border: 1px solid #684c52;
+  box-shadow: 0 20px 90px #000;
+  z-index: 20;
 }
-
-.window.open {
-  display: block;
-}
-
-.windowbar {
-  padding: 14px 17px;
+.window.open { display: block; }
+.window-head {
+  padding: 14px 18px;
+  background: #25171b;
+  border-bottom: 1px solid #684c52;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(90deg, #411a23, #23171c);
-  border-bottom: 1px solid #68464e;
-  cursor: move;
-  user-select: none;
-  touch-action: none;
-  font-size: 11px;
+  font: 12px Arial, sans-serif;
   letter-spacing: 3px;
 }
-
-.windowbar button {
-  background: transparent;
+.window-head button {
+  color: #eee;
+  background: none;
   border: 0;
-  color: var(--fg);
-  font-size: 23px;
-  line-height: 1;
+  font-size: 22px;
 }
-
-.windowbody {
-  padding: 20px 25px;
-}
-
-.window-note {
-  margin: 0 0 10px;
-  color: var(--muted);
-  font-size: 10px;
-  letter-spacing: 2px;
-}
-
-.link {
+.window-links { padding: 16px 25px; }
+.window-links button {
   display: flex;
-  align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 22px 4px;
-  background: transparent;
+  padding: 19px 5px;
   border: 0;
-  border-bottom: 1px solid var(--line);
-  color: var(--fg);
-  text-align: left;
-  font-size: 14px;
+  border-bottom: 1px solid #373035;
+  background: none;
+  color: #e8dfdb;
   letter-spacing: 3px;
-  transition: 0.2s;
+  text-align: left;
 }
+.window-links button:last-child { border: 0; }
+.window-links button:hover { color: #b97b86; }
 
-.link:last-child {
-  border-bottom: 0;
+@media(max-width: 650px) {
+  .top { padding: 25px 7%; }
+  main { padding: 35px 20px 80px; }
+  .folders { grid-template-columns: 1fr; gap: 13px; }
+  .folder { padding: 18px 22px; }
+  .folder-name { font-size: 21px; }
+  .rule { margin: 40px auto 30px; }
+  footer { padding: 24px 7%; letter-spacing: 2px; }
 }
-
-.link:hover {
-  color: var(--accent);
-}
-
-.link small {
-  color: var(--muted);
-  font-size: 10px;
-  letter-spacing: 1px;
-}
-
-.footer {
-  min-height: 55px;
-  padding: 18px 4%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-  border-top: 1px solid var(--line);
-  color: var(--muted);
-  font-size: 10px;
-  letter-spacing: 2px;
-}
-
-@media (max-width: 700px) {
-  .desktop {
-    padding: 25px 6% 85px;
-  }
-
-  .folders {
-    position: relative;
-    top: auto;
-    left: auto;
-    flex-direction: row;
-    gap: 18px;
-  }
-
-  .folder {
-    width: 85px;
-    font-size: 10px;
-  }
-
-  .folder svg {
-    width: 48px;
-    height: 45px;
-  }
-
-  .hero {
-    margin: 75px auto 0;
-  }
-
-  h1 {
-    font-size: clamp(54px, 13vw, 90px);
-  }
-
-  .eyebrow {
-    font-size: 9px;
-    letter-spacing: 3px;
-  }
-
-  .window {
-    top: 22% !important;
-    left: 5% !important;
-    width: 90vw;
-    max-width: none;
-  }
-
-  .windowbar {
-    cursor: default;
-  }
-
-  .footer {
-    font-size: 9px;
-    letter-spacing: 1px;
+@media(prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
   }
 }
 </style>
 </head>
-
 <body>
 
-<header class="topbar">
-  <span>ZMEY / 001</span>
-  <span>PERSONAL HUB</span>
-</header>
+<div class="forest" aria-hidden="true" id="forest">
+  <div class="fog"></div>
+  <div class="fog two"></div>
+  <div class="vignette"></div>
+  <div class="grain"></div>
+</div>
 
-<main class="desktop">
-
-  <nav class="folders" aria-label="Klasörler">
-
-    <button class="folder"
-      onclick="openWin('gamesWin')">
-      <svg viewBox="0 0 64 64" aria-hidden="true">
-        <path d="M5 17h22l7 8h25v29H5z"/>
-        <path d="M5 25h54" fill="none"/>
-        <path d="M22 40h9m-4.5-4.5v9m12-6h1m5 4h1"
-          fill="none" stroke-linecap="round"/>
-      </svg>
-      GAMES
-    </button>
-
-    <button class="folder"
-      onclick="openWin('videosWin')">
-      <svg viewBox="0 0 64 64" aria-hidden="true">
-        <path d="M5 17h22l7 8h25v29H5z"/>
-        <path d="M5 25h54" fill="none"/>
-        <rect x="20" y="33" width="25" height="16"
-          rx="2" fill="none"/>
-        <path d="m30 36 8 5-8 5z"
-          fill="#d3c8c1" stroke="none"/>
-      </svg>
-      VIDEOS
-    </button>
-
-  </nav>
-
-  <section class="hero">
-    <div class="eyebrow">
-      PLAYER PROFILE / 001
+<div class="page">
+  <header class="top">
+    <div class="connected">
+      <span class="dot"></span>CONNECTED
     </div>
+  </header>
 
-    <h1>ZMEY TEST.</h1>
+  <main>
+    <div class="content">
+      <h1>zmey<span>.</span></h1>
 
-    <div class="test-label">
-      NEW VERSION / TEST
+      <p class="quote">
+        “Hatred is born when people gather together.”
+        <span class="author">— JOHAN LIEBERT</span>
+      </p>
+
+      <div class="rule"></div>
+
+      <nav class="folders" aria-label="Bağlantılar">
+        <button class="folder" onclick="openWindow('games')">
+          <svg viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M4 13h16l6 6h18v23H4z"/>
+            <path d="M4 19h40"/>
+          </svg>
+          <span>
+            <span class="folder-name">games/</span>
+            <span class="folder-sub">steam · kick</span>
+          </span>
+        </button>
+
+        <button class="folder" onclick="openWindow('videos')">
+          <svg viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M4 13h16l6 6h18v23H4z"/>
+            <path d="M4 19h40"/>
+          </svg>
+          <span>
+            <span class="folder-name">videos/</span>
+            <span class="folder-sub">youtube · instagram</span>
+          </span>
+        </button>
+      </nav>
     </div>
+  </main>
 
-    <p class="quote">
-      “Hatred is born when people gather together.”
-      <span class="author">— JOHAN LIEBERT</span>
-    </p>
+  <footer>
+    <span>NO SIGNAL / 00:00</span>
+    <button class="sound" id="soundButton"
+      onclick="toggleSound()">◌ SOUND OFF</button>
+  </footer>
+</div>
 
-    <div class="hero-line"></div>
-
-    <div class="status">
-      ONLINE / EST. 2026
-    </div>
-  </section>
-
-</main>
-
-<section class="window" id="gamesWin"
-  role="dialog" aria-label="Games">
-
-  <div class="windowbar">
-    <span>◈ &nbsp; GAMES</span>
-    <button onclick="closeWin('gamesWin')"
-      aria-label="Kapat">×</button>
+<div class="window" id="games">
+  <div class="window-head">
+    <span>GAMES</span>
+    <button onclick="closeWindow('games')">×</button>
   </div>
-
-  <div class="windowbody">
-    <p class="window-note">GAMING / SOCIAL</p>
-
-    <button class="link"
-      onclick="comingSoon('Steam')">
-      STEAM <small>PROFILE ↗</small>
-    </button>
-
-    <button class="link"
-      onclick="comingSoon('Kick')">
-      KICK <small>CHANNEL ↗</small>
-    </button>
+  <div class="window-links">
+    <button onclick="comingSoon('Steam')">STEAM ↗</button>
+    <button onclick="comingSoon('Kick')">KICK ↗</button>
   </div>
-</section>
+</div>
 
-<section class="window" id="videosWin"
-  role="dialog" aria-label="Videos">
-
-  <div class="windowbar">
-    <span>▷ &nbsp; VIDEOS</span>
-    <button onclick="closeWin('videosWin')"
-      aria-label="Kapat">×</button>
+<div class="window" id="videos">
+  <div class="window-head">
+    <span>VIDEOS</span>
+    <button onclick="closeWindow('videos')">×</button>
   </div>
-
-  <div class="windowbody">
-    <p class="window-note">CONTENT / SOCIAL</p>
-
-    <button class="link"
-      onclick="comingSoon('Instagram')">
-      INSTAGRAM <small>PROFILE ↗</small>
-    </button>
-
-    <button class="link"
-      onclick="comingSoon('YouTube')">
-      YOUTUBE <small>CHANNEL ↗</small>
-    </button>
+  <div class="window-links">
+    <button onclick="comingSoon('YouTube')">YOUTUBE ↗</button>
+    <button onclick="comingSoon('Instagram')">INSTAGRAM ↗</button>
   </div>
-</section>
-
-<footer class="footer">
-  <span>© 2026 ZMEY</span>
-  <span>ALL SYSTEMS ONLINE</span>
-</footer>
+</div>
 
 <script>
-let topLayer = 20;
+/* RASTGELE ORMAN AĞAÇLARI */
+const forest = document.getElementById("forest");
 
-function openWin(id) {
-  const win = document.getElementById(id);
-  win.classList.add('open');
-  win.style.zIndex = ++topLayer;
+function random(seed) {
+  const x = Math.sin(seed * 127.1) * 43758.5453;
+  return x - Math.floor(x);
 }
 
-function closeWin(id) {
-  document.getElementById(id).classList.remove('open');
+for (let i = 0; i < 33; i++) {
+  const tree = document.createElement("div");
+  tree.className = "tree";
+
+  const depth = random(i + 5);
+  const height = 55 + depth * 80;
+  const width = 35 + depth * 65;
+
+  tree.style.setProperty("--x", (random(i + 90) * 115 - 7) + "%");
+  tree.style.setProperty("--h", height + "vh");
+  tree.style.setProperty("--w", width + "px");
+  tree.style.setProperty("--opacity", .25 + depth * .65);
+  tree.style.setProperty("--lean", (random(i + 300) * 12 - 6) + "deg");
+
+  tree.innerHTML = `
+    <div class="trunk"></div>
+    <div class="branch left"></div>
+    <div class="branch right"></div>
+    <div class="branch small-left"></div>
+    <div class="branch small-right"></div>
+  `;
+
+  forest.insertBefore(tree, forest.firstChild);
+}
+
+/* KLASÖRLER */
+function openWindow(id) {
+  document.querySelectorAll(".window").forEach(w => {
+    w.classList.remove("open");
+  });
+  document.getElementById(id).classList.add("open");
+}
+
+function closeWindow(id) {
+  document.getElementById(id).classList.remove("open");
 }
 
 function comingSoon(name) {
-  alert(name + ' bağlantısı yakında eklenecek.');
+  alert(name + " bağlantısı yakında eklenecek.");
 }
 
-document.querySelectorAll('.window').forEach(win => {
-  const bar = win.querySelector('.windowbar');
+/* SES: ŞİMDİLİK KONTROL HAZIR */
+let soundOn = false;
 
-  let dragging = false;
-  let dx = 0;
-  let dy = 0;
-
-  win.addEventListener('pointerdown', () => {
-    win.style.zIndex = ++topLayer;
-  });
-
-  bar.addEventListener('pointerdown', e => {
-    if (e.target.closest('button') ||
-        window.innerWidth <= 700) return;
-
-    dragging = true;
-    dx = e.clientX - win.offsetLeft;
-    dy = e.clientY - win.offsetTop;
-
-    bar.setPointerCapture(e.pointerId);
-  });
-
-  bar.addEventListener('pointermove', e => {
-    if (!dragging) return;
-
-    const x = Math.max(0, Math.min(
-      innerWidth - win.offsetWidth,
-      e.clientX - dx
-    ));
-
-    const y = Math.max(0, Math.min(
-      innerHeight - win.offsetHeight,
-      e.clientY - dy
-    ));
-
-    win.style.left = x + 'px';
-    win.style.top = y + 'px';
-  });
-
-  bar.addEventListener('pointerup', () => {
-    dragging = false;
-  });
-
-  bar.addEventListener('pointercancel', () => {
-    dragging = false;
-  });
-});
+function toggleSound() {
+  soundOn = !soundOn;
+  document.getElementById("soundButton").textContent =
+    soundOn ? "◉ SOUND ON" : "◌ SOUND OFF";
+}
 </script>
-
 </body>
 </html>
