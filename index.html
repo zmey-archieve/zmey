@@ -4,333 +4,540 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#09090b">
+<meta name="theme-color" content="#090c10">
 <title>ZMEY / JAPANESE NOIR</title>
+
 <style>
 :root {
-  --bg:#09090b;
-  --ink:#e6e5e3;
-  --muted:#929094;
-  --red:#a12c38;
-  --line:#494448;
-}
-* { box-sizing:border-box; }
-html { min-height:100%; }
-body {
-  margin:0;
-  min-height:100vh;
-  background:var(--bg);
-  color:var(--ink);
-  font-family:Arial,Helvetica,sans-serif;
-  overflow-x:hidden;
-}
-button { font:inherit; cursor:pointer; }
-button:focus-visible {
-  outline:2px solid #e9c9cd;
-  outline-offset:4px;
+  --bg: #090c10;
+  --ink: #e6e5e3;
+  --muted: #929094;
+  --red: #a12c38;
+  --line: #494448;
 }
 
-/* JAPANESE PSYCHOLOGICAL NOIR BACKGROUND */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+button:focus-visible {
+  outline: 2px solid #e9c9cd;
+  outline-offset: 4px;
+}
+
+/* ====================================
+   BLACKSITE × JAPANESE NOIR BACKGROUND
+==================================== */
+
 .environment {
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  overflow:hidden;
-  pointer-events:none;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+
   background:
     radial-gradient(
-      ellipse at 73% 28%,
-      #3d171d4d,transparent 38%
+      ellipse at 16% 22%,
+      rgba(48, 70, 85, .24),
+      transparent 43%
     ),
     radial-gradient(
-      ellipse at 12% 82%,
-      #27232a77,transparent 44%
+      ellipse at 83% 76%,
+      rgba(48, 58, 70, .18),
+      transparent 45%
     ),
-    linear-gradient(130deg,#111115,#09090b 65%);
-}
-.moon {
-  position:absolute;
-  width:min(42vw,510px);
-  aspect-ratio:1;
-  right:-7%;
-  top:4%;
-  border-radius:50%;
-  background:
     radial-gradient(
-      circle at 34% 32%,
-      #c23b46 0%,
-      #92232f 40%,
-      #4c111b 75%,
-      #1a0b10 100%
+      ellipse at 70% 30%,
+      rgba(90, 24, 35, .11),
+      transparent 38%
+    ),
+    linear-gradient(
+      135deg,
+      #12171c 0%,
+      #090c10 55%,
+      #0b0b0f 100%
     );
+}
+
+/* Kırmızı ay */
+.moon {
+  position: absolute;
+  width: min(28vw, 340px);
+  aspect-ratio: 1;
+  right: 5%;
+  top: 10%;
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle at 35% 32%,
+    #87303a 0%,
+    #63202b 45%,
+    #260f17 85%,
+    transparent 100%
+  );
+
+  opacity: .28;
+  filter: blur(3px);
+
   box-shadow:
-    0 0 100px #7d18252a,
-    0 0 220px #7d182512;
-  opacity:.54;
-  filter:blur(.6px);
-  animation:moonPulse 16s ease-in-out infinite alternate;
+    0 0 100px rgba(125, 30, 45, .09),
+    0 0 200px rgba(125, 30, 45, .04);
+
+  animation: moonPulse 18s ease-in-out infinite alternate;
 }
+
 .moon::before {
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:50%;
-  background:
-    radial-gradient(circle at 28% 33%,#16090d45 0 8%,transparent 9%),
-    radial-gradient(circle at 65% 62%,#1d090d50 0 13%,transparent 14%),
-    radial-gradient(circle at 43% 73%,#18080c45 0 6%,transparent 7%);
-  filter:blur(15px);
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle at 60% 55%,
+    rgba(0, 0, 0, .22),
+    transparent 65%
+  );
 }
+
 @keyframes moonPulse {
-  to { opacity:.38; transform:scale(1.035); }
+  to {
+    opacity: .18;
+    transform: scale(1.025);
+  }
 }
-.red-haze {
-  position:absolute;
-  width:55vw;
-  height:55vw;
-  left:-25%;
-  bottom:-38%;
-  background:radial-gradient(
-    circle,#7d1c2b2b,transparent 68%
+
+/* Soğuk hareketli ışık */
+.cold-haze {
+  position: absolute;
+  left: -18%;
+  top: -25%;
+  width: 70vw;
+  height: 95vh;
+
+  background: radial-gradient(
+    ellipse,
+    rgba(95, 139, 167, .14),
+    rgba(48, 75, 99, .06) 42%,
+    transparent 72%
   );
-  filter:blur(65px);
-  animation:hazeMove 20s ease-in-out infinite alternate;
+
+  filter: blur(55px);
+  animation: coldDrift 19s ease-in-out infinite alternate;
 }
-@keyframes hazeMove {
-  to { transform:translate(16%,-15%); opacity:.45; }
+
+@keyframes coldDrift {
+  from {
+    transform: translate(-5%, -4%);
+    opacity: .5;
+  }
+
+  to {
+    transform: translate(22%, 14%);
+    opacity: 1;
+  }
 }
+
+/* Sağ altta grafit gölge */
+.graphite-glow {
+  position: absolute;
+  right: -15%;
+  bottom: -35%;
+  width: 75vw;
+  height: 75vw;
+  max-width: 850px;
+  max-height: 850px;
+
+  background: radial-gradient(
+    circle,
+    rgba(85, 114, 135, .13),
+    transparent 65%
+  );
+
+  filter: blur(50px);
+  animation: graphiteMove 16s ease-in-out infinite alternate;
+}
+
+@keyframes graphiteMove {
+  to {
+    transform: translate(-10%, -12%);
+    opacity: .45;
+  }
+}
+
+/* İnce mimari çizgi */
 .vertical-shadow {
-  position:absolute;
-  right:16%;
-  top:-20%;
-  height:140%;
-  width:1px;
-  background:linear-gradient(
-    transparent,#d7b1b226,transparent
+  position: absolute;
+  right: 12%;
+  top: 12%;
+  width: 1px;
+  height: 76%;
+
+  background: linear-gradient(
+    transparent,
+    rgba(174, 194, 207, .13),
+    transparent
   );
-  transform:rotate(12deg);
+
+  transform: rotate(10deg);
 }
-.crt-lines {
-  position:absolute;
-  inset:0;
-  opacity:.19;
-  background:repeating-linear-gradient(
-    to bottom,
-    transparent 0px,
-    transparent 3px,
-    #000 4px,
-    #000 5px
+
+/* Çok hafif teknik grid */
+.gridlines {
+  position: absolute;
+  inset: 0;
+  opacity: .35;
+
+  background-image:
+    linear-gradient(
+      rgba(155, 192, 208, .035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(155, 192, 208, .035) 1px,
+      transparent 1px
+    );
+
+  background-size: 95px 95px;
+
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 25%,
+    #000 75%,
+    transparent
   );
 }
-.film-grain {
-  position:absolute;
-  inset:-50%;
-  opacity:.16;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
-  animation:grainShift .35s steps(3) infinite;
-}
-@keyframes grainShift {
-  0% { transform:translate(0,0); }
-  25% { transform:translate(-1%,1%); }
-  50% { transform:translate(1%,-1%); }
-  75% { transform:translate(-1%,-1%); }
-}
-.vignette {
-  position:absolute;
-  inset:0;
-  background:radial-gradient(
-    ellipse at center,
-    transparent 25%,#0009 100%
+
+/* Hareketli metalik ışık huzmesi */
+.light-beam {
+  position: absolute;
+  top: -40%;
+  left: -30%;
+  width: 45%;
+  height: 150%;
+
+  transform: rotate(27deg);
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(125, 174, 219, .035),
+    rgba(163, 213, 241, .10),
+    rgba(125, 174, 219, .025),
+    transparent
   );
+
+  filter: blur(38px);
+  animation: beamMove 22s ease-in-out infinite alternate;
 }
+
+@keyframes beamMove {
+  to {
+    left: 45%;
+    opacity: .4;
+  }
+}
+
+/* Seyrek analog ışık */
 .scan-flash {
-  position:absolute;
-  inset:0;
-  opacity:0;
-  background:linear-gradient(
-    180deg,transparent 42%,
-    #b73b4b12 49%,
-    #ffffff0b 50%,
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+
+  background: linear-gradient(
+    180deg,
+    transparent 46%,
+    rgba(180, 210, 230, .035) 50%,
     transparent 54%
   );
-  animation:analogFlash 13s steps(1) infinite;
+
+  animation: analogFlash 17s steps(1) infinite;
 }
+
 @keyframes analogFlash {
-  0%,94%,97%,100% { opacity:0; }
-  95%,96% { opacity:1; }
+  0%, 96%, 99%, 100% {
+    opacity: 0;
+  }
+
+  97%, 98% {
+    opacity: 1;
+  }
 }
 
-/* PAGE STRUCTURE */
+/* Hafif vignette */
+.vignette {
+  position: absolute;
+  inset: 0;
+
+  background: radial-gradient(
+    ellipse at 50% 42%,
+    transparent 35%,
+    rgba(0, 0, 0, .43) 100%
+  );
+}
+
+/* ====================================
+   PAGE STRUCTURE
+==================================== */
+
 .page {
-  min-height:100svh;
-  display:flex;
-  flex-direction:column;
-}
-.topbar {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:24px 5%;
-  color:#8d878b;
-  font-family:"Courier New",monospace;
-  font-size:10px;
-  letter-spacing:2px;
-}
-.topbar-jp { color:#b04a54; }
-main {
-  flex:1;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:55px 20px 75px;
-}
-.content {
-  width:100%;
-  max-width:780px;
-  animation:enter .9s ease both;
-}
-@keyframes enter {
-  from { opacity:0; transform:translateY(12px); }
-  to { opacity:1; transform:translateY(0); }
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* IDENTITY */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 5%;
+  color: #8d878b;
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.topbar-jp {
+  color: #b04a54;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 55px 20px 75px;
+}
+
+.content {
+  width: 100%;
+  max-width: 780px;
+  animation: enter .9s ease both;
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ====================================
+   ZMEY IDENTITY
+==================================== */
+
 .identity-section {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:30px;
-  padding:10px 0 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 10px 0 25px;
 }
-.identity-main { flex:1; min-width:0; }
+
+.identity-main {
+  flex: 1;
+  min-width: 0;
+}
+
 .wordmark {
-  position:relative;
-  display:inline-block;
-  margin:0;
-  font-family:Georgia,"Times New Roman",serif;
-  font-size:clamp(85px,12vw,150px);
-  font-weight:700;
-  line-height:.95;
-  letter-spacing:-.085em;
-  color:#e7e6e3;
-  text-shadow:0 4px 25px #000a;
+  position: relative;
+  display: inline-block;
+  margin: 0;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(85px, 12vw, 150px);
+  font-weight: 700;
+  line-height: .95;
+  letter-spacing: -.085em;
+
+  color: #e7e6e3;
+  text-shadow: 0 4px 25px #000a;
 }
-.wordmark .period { color:var(--red); }
+
+.wordmark .period {
+  color: var(--red);
+}
+
 .wordmark::before,
 .wordmark::after {
-  content:attr(data-text);
-  position:absolute;
-  inset:0;
-  opacity:0;
-  pointer-events:none;
-}
-.wordmark::before {
-  color:#ba4854;
-  clip-path:inset(20% 0 57% 0);
-}
-.wordmark::after {
-  color:#d0d5d8;
-  clip-path:inset(70% 0 12% 0);
-}
-.wordmark.glitch::before {
-  animation:glitchA .24s steps(2,end);
-}
-.wordmark.glitch::after {
-  animation:glitchB .24s steps(2,end);
-}
-@keyframes glitchA {
-  25%,75% { opacity:.85; transform:translate(-6px,1px); }
-}
-@keyframes glitchB {
-  25%,75% { opacity:.65; transform:translate(5px,-1px); }
-}
-.identity-code {
-  margin-top:18px;
-  color:#a09ca0;
-  font-family:"Courier New",monospace;
-  font-size:10px;
-  letter-spacing:3px;
-}
-.jp-column {
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:16px;
-  padding-left:27px;
-  border-left:1px solid #696064;
-}
-.jp-vertical {
-  writing-mode:vertical-rl;
-  text-orientation:upright;
-  font-family:"Yu Mincho","Hiragino Mincho ProN",serif;
-  font-size:24px;
-  letter-spacing:8px;
-  color:#c7c2c2;
-}
-.jp-mark {
-  width:7px;
-  height:7px;
-  background:var(--red);
-}
-.quote-block {
-  border-top:1px solid #625a5e;
-  padding-top:23px;
-}
-.quote {
-  max-width:650px;
-  margin:0;
-  color:#c9c5c5;
-  font-family:Georgia,"Times New Roman",serif;
-  font-size:clamp(14px,1.8vw,17px);
-  line-height:1.85;
-  letter-spacing:.015em;
-}
-.author {
-  display:block;
-  margin-top:17px;
-  color:#9a9297;
-  font-family:"Courier New",monospace;
-  font-size:10px;
-  letter-spacing:2.5px;
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
 }
 
-/* ARCHIVE */
+.wordmark::before {
+  color: #ba4854;
+  clip-path: inset(20% 0 57% 0);
+}
+
+.wordmark::after {
+  color: #d0d5d8;
+  clip-path: inset(70% 0 12% 0);
+}
+
+.wordmark.glitch::before {
+  animation: glitchA .24s steps(2, end);
+}
+
+.wordmark.glitch::after {
+  animation: glitchB .24s steps(2, end);
+}
+
+@keyframes glitchA {
+  25%, 75% {
+    opacity: .85;
+    transform: translate(-6px, 1px);
+  }
+}
+
+@keyframes glitchB {
+  25%, 75% {
+    opacity: .65;
+    transform: translate(5px, -1px);
+  }
+}
+
+.identity-code {
+  margin-top: 18px;
+  color: #a09ca0;
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+
+/* Japonca dikey yazı */
+.jp-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding-left: 27px;
+  border-left: 1px solid #696064;
+}
+
+.jp-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-family:
+    "Yu Mincho",
+    "Hiragino Mincho ProN",
+    serif;
+  font-size: 24px;
+  letter-spacing: 8px;
+  color: #c7c2c2;
+}
+
+.jp-mark {
+  width: 7px;
+  height: 7px;
+  background: var(--red);
+}
+
+/* ====================================
+   JOHAN LIEBERT QUOTE
+==================================== */
+
+.quote-block {
+  border-top: 1px solid #625a5e;
+  padding-top: 23px;
+}
+
+.quote {
+  max-width: 650px;
+  margin: 0;
+  color: #c9c5c5;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(14px, 1.8vw, 17px);
+  line-height: 1.85;
+  letter-spacing: .015em;
+}
+
+.author {
+  display: block;
+  margin-top: 17px;
+  color: #9a9297;
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  letter-spacing: 2.5px;
+}
+
+/* ====================================
+   ARCHIVE
+==================================== */
+
 .archive-heading {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-  margin-top:55px;
-  margin-bottom:18px;
-  padding-bottom:12px;
-  border-bottom:1px solid #51494d;
-  color:#b5afb1;
-  font-family:"Courier New",monospace;
-  font-size:10px;
-  letter-spacing:2px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+
+  margin-top: 55px;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+
+  border-bottom: 1px solid #51494d;
+  color: #b5afb1;
+
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
 }
+
 .archive-grid {
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:15px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
 }
+
+/* DARK ICE CHROME */
 .file {
-  --mx:50%;
-  --my:50%;
-  --rx:0deg;
-  --ry:0deg;
-  position:relative;
-  isolation:isolate;
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
-  min-height:205px;
-  padding:23px;
-  text-align:left;
-  border:1px solid #c1d0d9;
-  border-radius:2px;
-  color:#15242e;
-  background:linear-gradient(
+  --mx: 50%;
+  --my: 50%;
+  --rx: 0deg;
+  --ry: 0deg;
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 205px;
+  padding: 23px;
+  text-align: left;
+
+  border: 1px solid #c1d0d9;
+  border-radius: 2px;
+  color: #15242e;
+
+  background: linear-gradient(
     112deg,
     #dce5eb 0%,
     #9dafbc 11%,
@@ -344,297 +551,449 @@ main {
     #617889 93%,
     #cddae3 100%
   );
+
   box-shadow:
     inset 0 1px #fff9,
     inset 0 -2px #23374677,
     0 15px 38px #0009;
-  transform:perspective(900px)
+
+  transform:
+    perspective(900px)
     rotateX(var(--rx))
     rotateY(var(--ry));
+
   transition:
     transform .18s ease-out,
     box-shadow .3s,
     border-color .3s;
 }
+
 .file::before {
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:-1;
-  pointer-events:none;
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+
   background:
     repeating-linear-gradient(
-      0deg,#ffffff16 0 1px,
+      0deg,
+      #ffffff16 0 1px,
       #00000009 1px 2px,
       transparent 2px 4px
     ),
     linear-gradient(
-      180deg,#ffffff55,transparent 20%,
-      transparent 80%,#142a3b40
+      180deg,
+      #ffffff55,
+      transparent 20%,
+      transparent 80%,
+      #142a3b40
     );
-  mix-blend-mode:soft-light;
+
+  mix-blend-mode: soft-light;
 }
+
 .file::after {
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:-1;
-  pointer-events:none;
-  background:radial-gradient(
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+
+  background: radial-gradient(
     circle 170px at var(--mx) var(--my),
     #ffffffc9,
     #d2efff7a 20%,
     #8dbbd822 48%,
     transparent 75%
   );
-  opacity:.4;
-  transition:opacity .3s;
+
+  opacity: .4;
+  transition: opacity .3s;
 }
-.file:hover::after { opacity:1; }
+
+.file:hover::after {
+  opacity: 1;
+}
+
 .file:hover,
 .file:focus-visible {
-  border-color:#fff;
+  border-color: #fff;
+
   box-shadow:
     inset 0 1px #fff,
     inset 0 -2px #23374677,
     0 20px 45px #000b,
     0 0 30px #bfcbd522;
 }
+
 .file-top,
 .file-bottom {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
+
 .file-id {
-  font-family:"Courier New",monospace;
-  font-size:10px;
-  font-weight:bold;
-  letter-spacing:1px;
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
+
 .file-icon {
-  width:29px;
-  height:29px;
-  fill:none;
-  stroke:#1c303e;
-  stroke-width:1.5;
+  width: 29px;
+  height: 29px;
+  fill: none;
+  stroke: #1c303e;
+  stroke-width: 1.5;
 }
+
 .file-middle {
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  padding:20px 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px 0;
 }
+
 .file-name {
-  color:#14222c;
-  font-size:29px;
-  font-weight:900;
-  letter-spacing:-1px;
+  color: #14222c;
+  font-size: 29px;
+  font-weight: 900;
+  letter-spacing: -1px;
 }
+
 .file-sub {
-  margin-top:8px;
-  color:#354b5a;
-  font-family:"Courier New",monospace;
-  font-size:9px;
-  letter-spacing:1px;
+  margin-top: 8px;
+  color: #354b5a;
+  font-family: "Courier New", monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
 }
+
 .file-bottom {
-  color:#263d4b;
-  font-family:"Courier New",monospace;
-  font-size:10px;
-  font-weight:bold;
-  letter-spacing:1px;
+  color: #263d4b;
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
+
 .file-arrow {
-  width:20px;
-  height:20px;
-  fill:none;
-  stroke:#1b303e;
-  stroke-width:1.5;
-  transition:transform .25s;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: #1b303e;
+  stroke-width: 1.5;
+  transition: transform .25s;
 }
+
 .file:hover .file-arrow {
-  transform:translate(3px,-3px);
+  transform: translate(3px, -3px);
 }
+
 .archive-foot {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  margin-top:20px;
-  padding-top:14px;
-  border-top:1px solid #51494d;
-  color:#989296;
-  font-family:"Courier New",monospace;
-  font-size:10px;
-  letter-spacing:1.5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+
+  margin-top: 20px;
+  padding-top: 14px;
+
+  border-top: 1px solid #51494d;
+  color: #989296;
+
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
 }
+
 .cursor {
-  display:inline-block;
-  width:6px;
-  height:10px;
-  margin-left:5px;
-  background:#b14753;
-  animation:blink 1.1s steps(1) infinite;
+  display: inline-block;
+  width: 6px;
+  height: 10px;
+  margin-left: 5px;
+  background: #b14753;
+  animation: blink 1.1s steps(1) infinite;
 }
-@keyframes blink { 50% { opacity:0; } }
 
-/* TERMINAL */
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ====================================
+   TERMINAL POPUP
+==================================== */
+
 .overlay {
-  position:fixed;
-  inset:0;
-  z-index:20;
-  display:none;
-  justify-content:center;
-  align-items:center;
-  padding:20px;
-  background:#020203df;
-  backdrop-filter:blur(9px);
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+
+  background: #020203df;
+  backdrop-filter: blur(9px);
 }
-.overlay.open { display:flex; }
+
+.overlay.open {
+  display: flex;
+}
+
 .terminal {
-  width:100%;
-  max-width:470px;
-  background:#101013;
-  border:1px solid #796a70;
-  box-shadow:0 30px 100px #000d;
+  width: 100%;
+  max-width: 470px;
+  background: #101013;
+  border: 1px solid #796a70;
+  box-shadow: 0 30px 100px #000d;
 }
+
 .terminal-head {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:17px 21px;
-  background:linear-gradient(110deg,#421b24,#171316);
-  border-bottom:1px solid #796a70;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 17px 21px;
+
+  background: linear-gradient(
+    110deg,
+    #421b24,
+    #171316
+  );
+
+  border-bottom: 1px solid #796a70;
 }
+
 .terminal-title {
-  color:#ece5e6;
-  font-family:"Courier New",monospace;
-  font-size:10px;
-  letter-spacing:2px;
+  color: #ece5e6;
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
 }
+
 .close {
-  border:0;
-  background:transparent;
-  color:#ece5e6;
-  font-size:24px;
+  border: 0;
+  background: transparent;
+  color: #ece5e6;
+  font-size: 24px;
 }
-.terminal-body { padding:26px; }
+
+.terminal-body {
+  padding: 26px;
+}
+
 .terminal-status {
-  margin:0 0 25px;
-  color:#bdaeb3;
-  font-family:"Courier New",monospace;
-  font-size:10px;
-  line-height:2;
-  letter-spacing:1px;
-  white-space:pre-line;
+  margin: 0 0 25px;
+  color: #bdaeb3;
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  line-height: 2;
+  letter-spacing: 1px;
+  white-space: pre-line;
 }
+
 .terminal-link {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  width:100%;
-  padding:20px 4px;
-  border:0;
-  border-bottom:1px solid #4a3c42;
-  background:transparent;
-  color:#e8e4e5;
-  text-align:left;
-  font-size:12px;
-  letter-spacing:3px;
-  animation:linkIn .4s ease both;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  padding: 20px 4px;
+
+  border: 0;
+  border-bottom: 1px solid #4a3c42;
+  background: transparent;
+
+  color: #e8e4e5;
+  text-align: left;
+  font-size: 12px;
+  letter-spacing: 3px;
+
+  animation: linkIn .4s ease both;
 }
-.terminal-link:nth-child(2) { animation-delay:.12s; }
-.terminal-link:hover { color:#d76b78; }
+
+.terminal-link:nth-child(2) {
+  animation-delay: .12s;
+}
+
+.terminal-link:hover {
+  color: #d76b78;
+}
+
 .terminal-link svg {
-  width:19px;
-  height:19px;
-  fill:none;
-  stroke:currentColor;
-  stroke-width:1.4;
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
 }
+
 @keyframes linkIn {
-  from { opacity:0; transform:translateY(8px); }
-  to { opacity:1; transform:translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
+
 .terminal-foot {
-  margin-top:25px;
-  color:#8f8187;
-  font-family:"Courier New",monospace;
-  font-size:9px;
-  letter-spacing:2px;
+  margin-top: 25px;
+  color: #8f8187;
+  font-family: "Courier New", monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
 }
 
-/* FOOTER */
+/* ====================================
+   FOOTER
+==================================== */
+
 footer {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:25px 5%;
-  color:#8e878c;
-  font-family:"Courier New",monospace;
-  font-size:10px;
-  letter-spacing:2px;
-}
-.sound {
-  border:0;
-  background:transparent;
-  color:inherit;
-  font-size:10px;
-  letter-spacing:2px;
-  padding:8px;
-}
-.sound:hover { color:#fff; }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 5%;
 
-/* MOBILE */
-@media(max-width:600px) {
-  .topbar { padding:20px 5%; font-size:8px; }
-  main { padding:40px 16px 60px; }
-  .moon {
-    width:78vw;
-    right:-35%;
-    top:8%;
-    opacity:.3;
-  }
-  .identity-section { gap:12px; }
-  .wordmark { font-size:clamp(68px,17vw,110px); }
-  .identity-code {
-    font-size:8px;
-    letter-spacing:1px;
-  }
-  .jp-column { padding-left:12px; }
-  .jp-vertical { font-size:17px; letter-spacing:5px; }
-  .quote { font-size:14px; }
-  .author { font-size:9px; letter-spacing:1px; }
-  .archive-heading {
-    margin-top:40px;
-    font-size:8px;
-  }
-  .archive-grid { gap:9px; }
-  .file { min-height:170px; padding:13px; }
-  .file-name { font-size:21px; }
-  .file-id,.file-bottom,.file-sub { font-size:8px; }
-  .file-icon { width:24px; height:24px; }
-  .archive-foot { font-size:8px; }
-  footer { font-size:9px; }
+  color: #8e878c;
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
 }
-@media(prefers-reduced-motion:reduce) {
-  *,*::before,*::after {
-    animation-duration:.01ms !important;
-    transition-duration:.01ms !important;
+
+.sound {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 10px;
+  letter-spacing: 2px;
+  padding: 8px;
+}
+
+.sound:hover {
+  color: #fff;
+}
+
+/* ====================================
+   MOBILE
+==================================== */
+
+@media (max-width: 600px) {
+  .topbar {
+    padding: 20px 5%;
+    font-size: 8px;
+  }
+
+  main {
+    padding: 40px 16px 60px;
+  }
+
+  .moon {
+    width: 60vw;
+    right: -20%;
+    top: 8%;
+    opacity: .22;
+  }
+
+  .identity-section {
+    gap: 12px;
+  }
+
+  .wordmark {
+    font-size: clamp(68px, 17vw, 110px);
+  }
+
+  .identity-code {
+    font-size: 8px;
+    letter-spacing: 1px;
+  }
+
+  .jp-column {
+    padding-left: 12px;
+  }
+
+  .jp-vertical {
+    font-size: 17px;
+    letter-spacing: 5px;
+  }
+
+  .quote {
+    font-size: 14px;
+  }
+
+  .author {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+
+  .archive-heading {
+    margin-top: 40px;
+    font-size: 8px;
+  }
+
+  .archive-grid {
+    gap: 9px;
+  }
+
+  .file {
+    min-height: 170px;
+    padding: 13px;
+  }
+
+  .file-name {
+    font-size: 21px;
+  }
+
+  .file-id,
+  .file-bottom,
+  .file-sub {
+    font-size: 8px;
+  }
+
+  .file-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .archive-foot {
+    font-size: 8px;
+  }
+
+  footer {
+    font-size: 9px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
   }
 }
 </style>
 </head>
+
 <body>
 
+<!-- BACKGROUND -->
 <div class="environment" aria-hidden="true">
   <div class="moon"></div>
-  <div class="red-haze"></div>
+  <div class="cold-haze"></div>
+  <div class="graphite-glow"></div>
   <div class="vertical-shadow"></div>
-  <div class="crt-lines"></div>
-  <div class="film-grain"></div>
+  <div class="gridlines"></div>
+  <div class="light-beam"></div>
   <div class="scan-flash"></div>
   <div class="vignette"></div>
 </div>
@@ -649,32 +1008,47 @@ footer {
   <main>
     <section class="content">
 
+      <!-- ZMEY -->
       <div class="identity-section">
+
         <div class="identity-main">
-          <h1 class="wordmark" id="wordmark" data-text="zmey.">
+          <h1
+            class="wordmark"
+            id="wordmark"
+            data-text="zmey."
+          >
             zmey<span class="period">.</span>
           </h1>
+
           <div class="identity-code">
             IDENTITY NOT FOUND / 0001
           </div>
         </div>
 
         <div class="jp-column">
-          <span class="jp-vertical" lang="ja">正体不明</span>
+          <span class="jp-vertical" lang="ja">
+            正体不明
+          </span>
           <span class="jp-mark"></span>
         </div>
+
       </div>
 
+      <!-- QUOTE -->
       <div class="quote-block">
+
         <p class="quote">
           “The greatest secret to breaking the rules is to
           appear as though you are following them.”
         </p>
+
         <span class="author">
           JOHAN LIEBERT / “MONSTER”
         </span>
+
       </div>
 
+      <!-- ARCHIVE -->
       <div class="archive-heading">
         <span>ARCHIVE / 記録</span>
         <span>02 FILES</span>
@@ -682,45 +1056,77 @@ footer {
 
       <div class="archive-grid">
 
-        <button class="file" onclick="openTerminal('games')">
+        <!-- GAMES -->
+        <button
+          class="file"
+          onclick="openTerminal('games')"
+        >
           <div class="file-top">
-            <span class="file-id">FILE_001</span>
-            <svg class="file-icon" viewBox="0 0 32 32"
-                 aria-hidden="true">
+
+            <span class="file-id">
+              FILE_001
+            </span>
+
+            <svg
+              class="file-icon"
+              viewBox="0 0 32 32"
+              aria-hidden="true"
+            >
               <path d="M9 12h14c3 0 5 3 6 9 1 4-2 6-5 3l-4-4h-8l-4 4c-3 3-6 1-5-3 1-6 3-9 6-9z"/>
               <path d="M10 15v7M6.5 18.5h7"/>
               <circle cx="22" cy="16" r="1"/>
               <circle cx="25" cy="19" r="1"/>
             </svg>
+
           </div>
+
           <div class="file-middle">
             <span class="file-name">GAMES</span>
             <span class="file-sub">STEAM / KICK</span>
           </div>
+
           <div class="file-bottom">
             <span>開く / OPEN</span>
+
             <svg class="file-arrow" viewBox="0 0 24 24">
               <path d="M5 19 19 5M8 5h11v11"/>
             </svg>
           </div>
         </button>
 
-        <button class="file" onclick="openTerminal('videos')">
+        <!-- VIDEOS -->
+        <button
+          class="file"
+          onclick="openTerminal('videos')"
+        >
           <div class="file-top">
-            <span class="file-id">FILE_002</span>
-            <svg class="file-icon" viewBox="0 0 32 32"
-                 aria-hidden="true">
+
+            <span class="file-id">
+              FILE_002
+            </span>
+
+            <svg
+              class="file-icon"
+              viewBox="0 0 32 32"
+              aria-hidden="true"
+            >
               <rect x="4" y="9" width="24" height="16" rx="2"/>
               <path d="M4 14h24M10 9l4 5M19 9l4 5"/>
               <path d="m14 17 6 3-6 3z"/>
             </svg>
+
           </div>
+
           <div class="file-middle">
             <span class="file-name">VIDEOS</span>
-            <span class="file-sub">YOUTUBE / INSTAGRAM</span>
+            <span class="file-sub">
+              YOUTUBE / INSTAGRAM
+            </span>
           </div>
+
           <div class="file-bottom">
             <span>開く / OPEN</span>
+
             <svg class="file-arrow" viewBox="0 0 24 24">
               <path d="M5 19 19 5M8 5h11v11"/>
             </svg>
@@ -731,7 +1137,10 @@ footer {
 
       <div class="archive-foot">
         <span>NO SIGNAL / 00:00</span>
-        <span>SYSTEM READY <span class="cursor"></span></span>
+        <span>
+          SYSTEM READY
+          <span class="cursor"></span>
+        </span>
       </div>
 
     </section>
@@ -739,27 +1148,60 @@ footer {
 
   <footer>
     <span>ZMEY / JAPANESE NOIR</span>
-    <button class="sound" id="soundButton"
-            onclick="toggleSound()">◌ SOUND OFF</button>
+
+    <button
+      class="sound"
+      id="soundButton"
+      onclick="toggleSound()"
+    >
+      ◌ SOUND OFF
+    </button>
   </footer>
 
 </div>
 
-<div class="overlay" id="overlay" onclick="closeTerminal(event)">
-  <div class="terminal" role="dialog" aria-modal="true"
-       aria-label="Archive terminal">
+<!-- TERMINAL -->
+<div
+  class="overlay"
+  id="overlay"
+  onclick="closeTerminal(event)"
+>
+  <div
+    class="terminal"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Archive terminal"
+  >
+
     <div class="terminal-head">
-      <span class="terminal-title" id="terminalTitle"></span>
-      <button class="close" onclick="closeTerminal()"
-              aria-label="Kapat">×</button>
+      <span
+        class="terminal-title"
+        id="terminalTitle"
+      ></span>
+
+      <button
+        class="close"
+        onclick="closeTerminal()"
+        aria-label="Kapat"
+      >
+        ×
+      </button>
     </div>
+
     <div class="terminal-body">
-      <p class="terminal-status" id="terminalStatus"></p>
+      <p
+        class="terminal-status"
+        id="terminalStatus"
+      ></p>
+
       <div id="terminalLinks"></div>
+
       <div class="terminal-foot">
-        END OF DIRECTORY <span class="cursor"></span>
+        END OF DIRECTORY
+        <span class="cursor"></span>
       </div>
     </div>
+
   </div>
 </div>
 
@@ -793,7 +1235,7 @@ document.querySelectorAll(".file").forEach(card => {
   });
 });
 
-/* OCCASIONAL ANALOG GLITCH */
+/* OCCASIONAL GLITCH */
 const wordmark = document.getElementById("wordmark");
 
 if (!reduceMotion) {
@@ -801,27 +1243,31 @@ if (!reduceMotion) {
     setTimeout(() => {
       if (!document.hidden) {
         wordmark.classList.add("glitch");
+
         setTimeout(() => {
           wordmark.classList.remove("glitch");
         }, 240);
       }
+
       scheduleGlitch();
     }, 7000 + Math.random() * 9000);
   }
+
   scheduleGlitch();
 }
 
-/* TERMINAL DIRECTORIES */
+/* TERMINAL */
 const directories = {
   games: {
-    title:"FILE_001 / GAMES",
-    path:"C:\\ZMEY\\ARCHIVE\\GAMES",
-    links:["STEAM","KICK"]
+    title: "FILE_001 / GAMES",
+    path: "C:\\ZMEY\\ARCHIVE\\GAMES",
+    links: ["STEAM", "KICK"]
   },
+
   videos: {
-    title:"FILE_002 / VIDEOS",
-    path:"C:\\ZMEY\\ARCHIVE\\VIDEOS",
-    links:["YOUTUBE","INSTAGRAM"]
+    title: "FILE_002 / VIDEOS",
+    path: "C:\\ZMEY\\ARCHIVE\\VIDEOS",
+    links: ["YOUTUBE", "INSTAGRAM"]
   }
 };
 
@@ -844,9 +1290,12 @@ function openTerminal(type) {
 
   document.getElementById("terminalLinks").innerHTML =
     data.links.map(name => `
-      <button class="terminal-link"
-        onclick="comingSoon('${name}')">
-        <span>${name}</span>${arrow}
+      <button
+        class="terminal-link"
+        onclick="comingSoon('${name}')"
+      >
+        <span>${name}</span>
+        ${arrow}
       </button>
     `).join("");
 
@@ -856,14 +1305,19 @@ function openTerminal(type) {
 
 function closeTerminal(event) {
   if (event && event.target !== event.currentTarget) return;
+
   const overlay = document.getElementById("overlay");
+
   if (!overlay.classList.contains("open")) return;
+
   overlay.classList.remove("open");
+
   if (previousFocus) previousFocus.focus();
 }
 
 document.addEventListener("keydown", e => {
   const overlay = document.getElementById("overlay");
+
   if (!overlay.classList.contains("open")) return;
 
   if (e.key === "Escape") closeTerminal();
@@ -898,11 +1352,17 @@ async function toggleSound() {
 
   if (soundOn) {
     soundNodes.forEach(node => {
-      try { node.stop(); } catch(e) {}
+      try {
+        node.stop();
+      } catch(e) {}
+
       node.disconnect();
     });
+
     soundNodes = [];
+
     if (soundGain) soundGain.disconnect();
+
     soundGain = null;
     soundOn = false;
     button.textContent = "◌ SOUND OFF";
@@ -912,33 +1372,42 @@ async function toggleSound() {
   try {
     const AudioCtx =
       window.AudioContext || window.webkitAudioContext;
+
     if (!AudioCtx) return;
 
-    if (!audioContext) audioContext = new AudioCtx();
+    if (!audioContext) {
+      audioContext = new AudioCtx();
+    }
+
     await audioContext.resume();
 
     soundGain = audioContext.createGain();
     soundGain.gain.value = .025;
     soundGain.connect(audioContext.destination);
 
-    [55,82.41,110].forEach((freq,i) => {
+    [55, 82.41, 110].forEach((freq, i) => {
       const osc = audioContext.createOscillator();
       const gain = audioContext.createGain();
+
       osc.type = "sine";
       osc.frequency.value = freq;
       gain.gain.value = i === 0 ? .35 : .12;
+
       osc.connect(gain);
       gain.connect(soundGain);
+
       osc.start();
       soundNodes.push(osc);
     });
 
     soundOn = true;
     button.textContent = "◉ SOUND ON";
+
   } catch(e) {
-    console.error("Ses başlatılamadı:",e);
+    console.error("Ses başlatılamadı:", e);
   }
 }
 </script>
+
 </body>
 </html>
