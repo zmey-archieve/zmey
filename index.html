@@ -1,38 +1,477 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#09090b">
 <title>ZMEY — Personal Hub</title>
-<meta name="theme-color" content="#080707">
+
 <style>
-*{box-sizing:border-box}body{margin:0;background:#080707;color:#eee5dc;font-family:Georgia,serif}button{font:inherit;cursor:pointer} .stage{position:relative;width:100%;aspect-ratio:1670/941;background:url('background.png') center/100% 100% no-repeat}.hotspot{position:absolute;left:2.7%;width:8%;height:12%;border:1px solid transparent;background:transparent;border-radius:9px;cursor:pointer}.hotspot:hover,.hotspot:focus-visible{border-color:#b99b8b;background:#ffffff12;outline:none}.games{top:13%}.videos{top:27.3%}.window{display:none;position:absolute;top:45%;left:31%;width:440px;max-width:85vw;background:#100e0f;border:1px solid #78535a;box-shadow:0 20px 65px #000e;z-index:5}.window.open{display:block}.bar{background:linear-gradient(90deg,#4b191d,#241214);border-bottom:1px solid #80565d;display:flex;align-items:center;justify-content:space-between;padding:12px 15px;cursor:move;user-select:none}.bar button{color:#eee5dc;border:0;background:transparent;font-size:24px;line-height:1}.links{padding:15px 24px}.links button{display:flex;align-items:center;justify-content:space-between;width:100%;padding:22px 7px;background:transparent;border:0;border-bottom:1px solid #44363a;color:#eee5dc;letter-spacing:3px;text-align:left}.links button:last-child{border-bottom:0}.links button:hover{color:#d4a5ac}.links small{font-family:Arial,sans-serif;color:#a79a9a;font-size:11px;letter-spacing:1px}.note{font:12px Arial,sans-serif;color:#b9a9aa;padding:0 24px 16px}.mobile-hint{display:none}@media(max-width:750px){.viewport{overflow-x:auto}.stage{width:950px;max-width:none}.window{position:fixed;top:25%;left:5%!important;width:90vw;max-width:none}.bar{cursor:default}.mobile-hint{display:block;text-align:center;padding:10px;font:12px Arial,sans-serif;color:#aaa}}
+:root {
+  --bg:#09090b;
+  --fg:#ede8e2;
+  --muted:#8d878a;
+  --line:#393136;
+  --wine:#51242e;
+  --accent:#bd7984;
+}
+
+* { box-sizing:border-box; }
+
+body {
+  margin:0;
+  min-height:100svh;
+  background:var(--bg);
+  color:var(--fg);
+  font-family:Arial,Helvetica,sans-serif;
+  overflow-x:hidden;
+}
+
+body::before {
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(
+      ellipse at 80% 85%,
+      #32131a25,
+      transparent 55%
+    );
+}
+
+button { font:inherit; cursor:pointer; }
+
+.topbar {
+  height:65px;
+  padding:0 4%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid var(--line);
+  font-size:10px;
+  letter-spacing:3px;
+  position:relative;
+  z-index:1;
+}
+
+.topbar span:last-child { color:var(--muted); }
+
+.desktop {
+  position:relative;
+  min-height:calc(100svh - 120px);
+  padding:65px 5% 100px;
+}
+
+.folders {
+  position:absolute;
+  left:5%;
+  top:65px;
+  display:flex;
+  flex-direction:column;
+  gap:36px;
+}
+
+.folder {
+  width:95px;
+  padding:8px;
+  background:none;
+  border:1px solid transparent;
+  color:var(--fg);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:13px;
+  font-size:11px;
+  letter-spacing:2px;
+  transition:.2s;
+}
+
+.folder:hover,
+.folder:focus-visible {
+  background:#ffffff09;
+  border-color:#57454b;
+  outline:none;
+}
+
+.folder svg {
+  width:59px;
+  height:53px;
+  fill:#272326;
+  stroke:#d3c8c1;
+  stroke-width:1.5;
+}
+
+.hero {
+  max-width:900px;
+  margin:55px auto 0;
+  text-align:center;
+  position:relative;
+  z-index:1;
+}
+
+.eyebrow {
+  color:var(--accent);
+  font-size:10px;
+  letter-spacing:5px;
+  margin-bottom:26px;
+}
+
+h1 {
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  font-weight:600;
+  font-size:clamp(80px,13vw,190px);
+  line-height:1;
+  letter-spacing:-.095em;
+  padding-right:.095em;
+}
+
+.quote {
+  margin:36px auto 0;
+  max-width:650px;
+  color:#c8bec0;
+  font-family:Georgia,serif;
+  font-size:clamp(13px,1.4vw,17px);
+  line-height:1.8;
+  letter-spacing:.055em;
+}
+
+.author {
+  display:block;
+  margin-top:14px;
+  color:var(--muted);
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:10px;
+  letter-spacing:4px;
+}
+
+.hero-line {
+  width:65px;
+  height:1px;
+  margin:43px auto;
+  background:var(--wine);
+}
+
+.status {
+  font-size:10px;
+  letter-spacing:3px;
+  color:#655c60;
+}
+
+.window {
+  display:none;
+  position:fixed;
+  top:28%;
+  left:34%;
+  width:430px;
+  max-width:90vw;
+  background:#121012;
+  border:1px solid #68464e;
+  box-shadow:0 30px 100px #000c;
+  z-index:10;
+}
+
+.window.open { display:block; }
+
+.windowbar {
+  background:linear-gradient(90deg,#411a23,#23171c);
+  border-bottom:1px solid #68464e;
+  padding:14px 17px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  cursor:move;
+  user-select:none;
+  touch-action:none;
+  font-size:11px;
+  letter-spacing:3px;
+}
+
+.windowbar button {
+  border:0;
+  background:transparent;
+  color:var(--fg);
+  font-size:23px;
+  line-height:1;
+}
+
+.windowbody { padding:20px 25px; }
+
+.window-note {
+  margin:0 0 10px;
+  color:var(--muted);
+  font-size:10px;
+  letter-spacing:2px;
+}
+
+.link {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  width:100%;
+  padding:22px 4px;
+  background:none;
+  border:0;
+  border-bottom:1px solid var(--line);
+  color:var(--fg);
+  text-align:left;
+  font-size:14px;
+  letter-spacing:3px;
+  transition:.2s;
+}
+
+.link:last-child { border-bottom:0; }
+.link:hover { color:var(--accent); }
+
+.link small {
+  color:var(--muted);
+  font-size:10px;
+  letter-spacing:1px;
+}
+
+.footer {
+  min-height:55px;
+  padding:18px 4%;
+  border-top:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  color:var(--muted);
+  font-size:10px;
+  letter-spacing:2px;
+}
+
+@media(max-width:700px) {
+  .topbar { padding:0 6%; }
+
+  .desktop {
+    padding:25px 6% 85px;
+    min-height:calc(100svh - 120px);
+  }
+
+  .folders {
+    position:relative;
+    top:auto;
+    left:auto;
+    flex-direction:row;
+    gap:18px;
+  }
+
+  .folder {
+    width:85px;
+    font-size:10px;
+  }
+
+  .folder svg {
+    width:48px;
+    height:45px;
+  }
+
+  .hero { margin:75px auto 0; }
+
+  h1 {
+    font-size:clamp(65px,17vw,110px);
+  }
+
+  .eyebrow {
+    font-size:9px;
+    letter-spacing:3px;
+  }
+
+  .quote { margin-top:30px; }
+
+  .window {
+    top:22%!important;
+    left:5%!important;
+    width:90vw;
+    max-width:none;
+  }
+
+  .windowbar { cursor:default; }
+
+  .footer {
+    font-size:9px;
+    letter-spacing:1px;
+  }
+}
 </style>
 </head>
+
 <body>
-<div class="mobile-hint">Görseli sağa sola kaydırabilirsin.</div>
-<div class="viewport"><main class="stage" aria-label="ZMEY kişisel sitesi">
-<button class="hotspot games" aria-label="Games klasörünü aç" onclick="openWin('gamesWin')"></button>
-<button class="hotspot videos" aria-label="Videos klasörünü aç" onclick="openWin('videosWin')"></button>
-<section class="window" id="gamesWin" aria-label="Games bağlantıları" role="dialog">
-<div class="bar"><span>♧ &nbsp; Games</span><button aria-label="Kapat" onclick="closeWin('gamesWin')">×</button></div>
-<div class="links"><button onclick="comingSoon('Steam')">STEAM <small>PROFILE ↗</small></button><button onclick="comingSoon('Kick')">KICK <small>CHANNEL ↗</small></button></div><div class="note">Bağlantılar yakında eklenecek.</div>
+
+<header class="topbar">
+  <span>ZMEY / 001</span>
+  <span>PERSONAL HUB</span>
+</header>
+
+<main class="desktop">
+
+  <nav class="folders" aria-label="Klasörler">
+
+    <button class="folder"
+      onclick="openWin('gamesWin')"
+      aria-label="Games klasörünü aç">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M5 17h22l7 8h25v29H5z"/>
+        <path d="M5 25h54" fill="none"/>
+        <path d="M22 40h9m-4.5-4.5v9m12-6h1m5 4h1"
+          fill="none" stroke-linecap="round"/>
+      </svg>
+      GAMES
+    </button>
+
+    <button class="folder"
+      onclick="openWin('videosWin')"
+      aria-label="Videos klasörünü aç">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M5 17h22l7 8h25v29H5z"/>
+        <path d="M5 25h54" fill="none"/>
+        <rect x="20" y="33" width="25" height="16"
+          rx="2" fill="none"/>
+        <path d="m30 36 8 5-8 5z" fill="#d3c8c1"
+          stroke="none"/>
+      </svg>
+      VIDEOS
+    </button>
+
+  </nav>
+
+  <section class="hero">
+    <div class="eyebrow">
+      プレイヤー / PLAYER PROFILE
+    </div>
+
+    <h1>ZMEY.</h1>
+
+    <p class="quote">
+      “Hatred is born when people gather together.”
+      <span class="author">— JOHAN LIEBERT</span>
+    </p>
+
+    <div class="hero-line"></div>
+
+    <div class="status">ONLINE / EST. 2026</div>
+  </section>
+
+</main>
+
+<section class="window" id="gamesWin"
+  role="dialog" aria-label="Games bağlantıları">
+
+  <div class="windowbar">
+    <span>◈ &nbsp; GAMES</span>
+    <button onclick="closeWin('gamesWin')"
+      aria-label="Kapat">×</button>
+  </div>
+
+  <div class="windowbody">
+    <p class="window-note">GAMING / SOCIAL</p>
+
+    <button class="link" onclick="comingSoon('Steam')">
+      STEAM <small>PROFILE ↗</small>
+    </button>
+
+    <button class="link" onclick="comingSoon('Kick')">
+      KICK <small>CHANNEL ↗</small>
+    </button>
+  </div>
 </section>
-<section class="window" id="videosWin" aria-label="Videos bağlantıları" role="dialog">
-<div class="bar"><span>▷ &nbsp; Videos</span><button aria-label="Kapat" onclick="closeWin('videosWin')">×</button></div>
-<div class="links"><button onclick="comingSoon('Instagram')">INSTAGRAM <small>PROFILE ↗</small></button><button onclick="comingSoon('YouTube')">YOUTUBE <small>CHANNEL ↗</small></button></div><div class="note">Bağlantılar yakında eklenecek.</div>
+
+<section class="window" id="videosWin"
+  role="dialog" aria-label="Videos bağlantıları">
+
+  <div class="windowbar">
+    <span>▷ &nbsp; VIDEOS</span>
+    <button onclick="closeWin('videosWin')"
+      aria-label="Kapat">×</button>
+  </div>
+
+  <div class="windowbody">
+    <p class="window-note">CONTENT / SOCIAL</p>
+
+    <button class="link" onclick="comingSoon('Instagram')">
+      INSTAGRAM <small>PROFILE ↗</small>
+    </button>
+
+    <button class="link" onclick="comingSoon('YouTube')">
+      YOUTUBE <small>CHANNEL ↗</small>
+    </button>
+  </div>
 </section>
-</main></div>
+
+<footer class="footer">
+  <span>© 2026 ZMEY</span>
+  <span>ALL SYSTEMS ONLINE</span>
+</footer>
+
 <script>
-let z=10;
-function openWin(id){const el=document.getElementById(id);el.classList.add('open');el.style.zIndex=++z}
-function closeWin(id){document.getElementById(id).classList.remove('open')}
-function comingSoon(name){alert(name+' bağlantısı henüz eklenmedi.')}
-for(const win of document.querySelectorAll('.window')){
- const bar=win.querySelector('.bar');let drag=false,dx=0,dy=0;
- win.addEventListener('pointerdown',()=>win.style.zIndex=++z);
- bar.addEventListener('pointerdown',e=>{if(e.target.closest('button')||innerWidth<=750)return;drag=true;dx=e.clientX-win.offsetLeft;dy=e.clientY-win.offsetTop;bar.setPointerCapture(e.pointerId)});
- bar.addEventListener('pointermove',e=>{if(!drag)return;win.style.left=Math.max(0,Math.min(innerWidth-win.offsetWidth,e.clientX-dx))+'px';win.style.top=Math.max(0,Math.min(innerHeight-win.offsetHeight,e.clientY-dy))+'px'});
- bar.addEventListener('pointerup',()=>drag=false);bar.addEventListener('pointercancel',()=>drag=false);
+let topLayer = 20;
+
+function openWin(id) {
+  const win = document.getElementById(id);
+  win.classList.add('open');
+  win.style.zIndex = ++topLayer;
 }
+
+function closeWin(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+function comingSoon(name) {
+  alert(name + ' bağlantısı yakında eklenecek.');
+}
+
+document.querySelectorAll('.window').forEach(win => {
+  const bar = win.querySelector('.windowbar');
+
+  let dragging = false;
+  let dx = 0;
+  let dy = 0;
+
+  win.addEventListener('pointerdown', () => {
+    win.style.zIndex = ++topLayer;
+  });
+
+  bar.addEventListener('pointerdown', e => {
+    if (e.target.closest('button') ||
+        window.innerWidth <= 700) return;
+
+    dragging = true;
+    dx = e.clientX - win.offsetLeft;
+    dy = e.clientY - win.offsetTop;
+
+    bar.setPointerCapture(e.pointerId);
+  });
+
+  bar.addEventListener('pointermove', e => {
+    if (!dragging) return;
+
+    const x = Math.max(0, Math.min(
+      innerWidth - win.offsetWidth,
+      e.clientX - dx
+    ));
+
+    const y = Math.max(0, Math.min(
+      innerHeight - win.offsetHeight,
+      e.clientY - dy
+    ));
+
+    win.style.left = x + 'px';
+    win.style.top = y + 'px';
+  });
+
+  bar.addEventListener('pointerup', () => {
+    dragging = false;
+  });
+
+  bar.addEventListener('pointercancel', () => {
+    dragging = false;
+  });
+});
 </script>
-</body></html>
+
+</body>
+</html>
