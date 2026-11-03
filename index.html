@@ -4,320 +4,485 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#080a0b">
+<meta name="theme-color" content="#080b0c">
 <title>zmey.</title>
+
 <style>
 :root {
-  --white: #ded9d3;
-  --muted: #938d8b;
-  --red: #752b34;
+  --bg: #080b0c;
+  --paper: #e3e0dc;
+  --muted: #a39d9b;
+  --red: #852c37;
+  --border: #665e5b;
 }
+
 * { box-sizing: border-box; }
-html, body { margin: 0; min-height: 100%; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+}
+
 body {
-  background: #080a0b;
-  color: var(--white);
-  font-family: Georgia, "Times New Roman", serif;
+  background: var(--bg);
+  color: var(--paper);
+  font-family: Arial, Helvetica, sans-serif;
   overflow-x: hidden;
 }
-button { font: inherit; cursor: pointer; }
 
-/* TAMAMEN KODLA ÇİZİLEN ORMAN */
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+/* ORMAN — TAMAMEN KODLA */
 .forest {
   position: fixed;
   inset: 0;
   overflow: hidden;
-  z-index: -1;
+  z-index: 0;
+  pointer-events: none;
   background:
-    radial-gradient(ellipse at 50% 65%, #252c2c 0%, #101617 45%, #050607 100%);
+    radial-gradient(
+      ellipse at 50% 40%,
+      #263032 0%,
+      #141b1d 40%,
+      #060809 85%
+    );
 }
+
 .tree {
   position: absolute;
-  bottom: -10%;
+  bottom: -12vh;
+  left: var(--x);
   width: var(--w);
   height: var(--h);
-  left: var(--x);
-  opacity: var(--opacity);
+  opacity: var(--o);
+  transform: rotate(var(--lean));
   transform-origin: bottom center;
+  filter: blur(var(--blur));
 }
+
 .trunk {
   position: absolute;
   bottom: 0;
-  left: 45%;
-  width: 12%;
+  left: 44%;
+  width: 13%;
   height: 100%;
-  background: linear-gradient(90deg, #030506, #13191a, #030506);
-  transform: rotate(var(--lean));
+  background: linear-gradient(
+    90deg,
+    #030505,
+    #101719,
+    #030505
+  );
 }
+
 .branch {
   position: absolute;
-  width: 5%;
-  height: 55%;
-  bottom: 38%;
-  left: 50%;
-  background: #06090a;
+  bottom: var(--bottom);
+  left: 49%;
+  width: var(--bw);
+  height: var(--bh);
+  background: #050809;
   transform-origin: bottom center;
+  transform: rotate(var(--angle));
 }
-.branch.left { transform: rotate(-37deg); }
-.branch.right { transform: rotate(39deg); }
-.branch.small-left {
-  height: 34%;
-  bottom: 57%;
-  transform: rotate(-62deg);
+
+.branch::after {
+  content: "";
+  position: absolute;
+  top: 12%;
+  left: 0;
+  width: 75%;
+  height: 55%;
+  background: inherit;
+  transform: rotate(35deg);
+  transform-origin: top center;
 }
-.branch.small-right {
-  height: 31%;
-  bottom: 62%;
-  transform: rotate(65deg);
-}
+
 .fog {
   position: absolute;
-  width: 120%;
-  height: 45%;
-  left: -10%;
+  left: -25%;
+  width: 150%;
+  height: 46%;
   bottom: 5%;
   background: radial-gradient(
-    ellipse,
-    #9ba4a416 0%,
-    #7b89890b 45%,
-    transparent 72%
+    ellipse at center,
+    #a1b2b322 0%,
+    #7d969612 35%,
+    transparent 70%
   );
-  filter: blur(38px);
-  animation: drift 28s ease-in-out infinite alternate;
+  filter: blur(45px);
+  animation: fogMove 35s ease-in-out infinite alternate;
 }
-.fog.two {
-  bottom: 27%;
-  opacity: .55;
-  animation-duration: 41s;
+
+.fog.second {
+  bottom: 30%;
+  opacity: .6;
+  animation-duration: 47s;
   animation-direction: alternate-reverse;
 }
-@keyframes drift {
-  from { transform: translateX(-12%); }
-  to { transform: translateX(12%); }
+
+@keyframes fogMove {
+  from { transform: translateX(-10%); }
+  to { transform: translateX(10%); }
 }
+
 .vignette {
   position: absolute;
   inset: 0;
   background: radial-gradient(
-    ellipse at center,
-    transparent 15%,
-    #000000b8 100%
+    ellipse at 50% 45%,
+    transparent 12%,
+    #000000a8 100%
   );
 }
+
 .grain {
   position: absolute;
   inset: 0;
-  opacity: .12;
-  pointer-events: none;
-  background-image: repeating-linear-gradient(
+  opacity: .13;
+  background: repeating-linear-gradient(
     0deg,
     transparent 0px,
-    #ffffff0c 1px,
+    #ffffff0a 1px,
     transparent 2px,
     transparent 5px
   );
 }
 
-/* SAYFA */
+/* ANA SAYFA */
 .page {
+  position: relative;
+  z-index: 1;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
-  position: relative;
 }
-.top {
+
+header {
+  padding: 34px 6%;
   display: flex;
   justify-content: flex-end;
-  padding: 35px 6%;
 }
+
 .connected {
-  font: 10px Arial, sans-serif;
+  color: #c2b9b7;
+  font-size: 10px;
   letter-spacing: 4px;
-  color: #aaa1a0;
 }
-.dot {
+
+.connected::before {
+  content: "";
   display: inline-block;
   width: 7px;
   height: 7px;
+  margin-right: 13px;
   border-radius: 50%;
   background: var(--red);
-  margin-right: 14px;
-  box-shadow: 0 0 10px #752b3470;
-  animation: pulse 3s infinite;
+  box-shadow: 0 0 12px #852c3777;
+  animation: blink 3.5s infinite;
 }
-@keyframes pulse {
-  50% { opacity: .3; }
+
+@keyframes blink {
+  50% { opacity: .35; }
 }
+
 main {
   flex: 1;
-  width: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
-  padding: 55px 20px 100px;
+  align-items: center;
+  padding: 35px 20px 90px;
 }
+
 .content {
   width: 100%;
-  max-width: 850px;
+  max-width: 940px;
   text-align: center;
-  animation: appear 2.2s ease both;
+  animation: fadeIn 2s ease both;
 }
-@keyframes appear {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: translateY(0); }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
+
 h1 {
   margin: 0;
-  font-size: clamp(72px, 10vw, 132px);
-  font-weight: normal;
-  letter-spacing: -.075em;
-  line-height: 1.1;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(75px, 10vw, 130px);
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: -.085em;
+  line-height: 1;
 }
-h1 span { color: #842d38; }
+
+h1 span {
+  color: #a12e3c;
+}
+
 .quote {
-  margin: 27px auto 0;
-  color: #c2bab7;
-  font-size: clamp(13px, 1.6vw, 17px);
-  font-style: italic;
-  letter-spacing: .065em;
-  line-height: 1.9;
+  max-width: 720px;
+  margin: 36px auto 0;
+  color: #d1c9c6;
+  font-size: clamp(12px, 1.45vw, 16px);
+  font-weight: 400;
+  font-style: normal;
+  line-height: 2;
+  letter-spacing: .14em;
 }
+
 .author {
   display: block;
-  margin-top: 13px;
-  font: 10px Arial, sans-serif;
+  margin-top: 17px;
+  color: #b7a9a5;
+  font-size: 10px;
   font-style: normal;
   letter-spacing: 5px;
-  color: #918786;
 }
-.rule {
-  width: min(480px, 75%);
+
+/* SADE ÇİZGİ — YILDIZ YOK */
+.divider {
+  width: min(550px, 78%);
   height: 1px;
-  margin: 58px auto 45px;
+  margin: 53px auto 48px;
   background: linear-gradient(
     90deg,
     transparent,
-    #71303a,
+    #74313a 25%,
+    #74313a 75%,
     transparent
   );
 }
+
+/* KLASÖRLER */
 .folders {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr 1fr;
   gap: 24px;
-  max-width: 670px;
+  max-width: 760px;
   margin: auto;
 }
+
 .folder {
-  background: #090b0bb5;
-  border: 1px solid #62545490;
-  color: var(--white);
-  padding: 23px 27px;
-  text-align: left;
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 22px;
-  transition: background .3s, border-color .3s, transform .3s;
+  gap: 24px;
+  min-height: 108px;
+  padding: 24px 28px;
+  text-align: left;
+  color: var(--paper);
+  background: #080a0bc9;
+  border: 1px solid #77706c;
+  transition: .3s ease;
 }
+
 .folder:hover {
-  background: #23181bdc;
-  border-color: #a46d75;
+  border-color: #b89b9d;
+  background: #171316eb;
   transform: translateY(-3px);
 }
-.folder svg {
-  width: 35px;
-  height: 35px;
-  fill: none;
-  stroke: #baa9a5;
-  stroke-width: 1.4;
+
+.folder-icon {
+  width: 37px;
+  height: 37px;
   flex-shrink: 0;
+  fill: none;
+  stroke: #d1c4bc;
+  stroke-width: 1.3;
 }
-.folder-name {
+
+.folder-info {
+  flex: 1;
+}
+
+.folder-title {
   display: block;
-  font-size: 24px;
+  font-size: 23px;
   letter-spacing: 3px;
+  font-weight: 400;
 }
+
 .folder-sub {
   display: block;
-  margin-top: 7px;
-  font: 10px Arial, sans-serif;
-  color: #a09896;
-  letter-spacing: 2px;
+  margin-top: 9px;
+  font-size: 9px;
+  letter-spacing: 2.5px;
+  color: #a9a09d;
 }
+
+/* MODERN / RETRO OK */
+.arrow {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  stroke: #b8aba7;
+  fill: none;
+  stroke-width: 1.25;
+  stroke-linecap: square;
+  transition: transform .3s, stroke .3s;
+}
+
+.folder:hover .arrow {
+  transform: translateX(5px);
+  stroke: #c27a85;
+}
+
+/* ALT BAR */
 footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 28px 6%;
-  color: #a29a97;
-  font: 10px Arial, sans-serif;
-  letter-spacing: 4px;
-}
-.sound {
-  color: inherit;
-  background: transparent;
-  border: 0;
+  padding: 25px 6%;
+  color: #a59a96;
   font-size: 10px;
   letter-spacing: 3px;
 }
-.sound:hover { color: #eee; }
+
+.sound {
+  border: 0;
+  background: transparent;
+  color: #c4b8b3;
+  font-size: 10px;
+  letter-spacing: 2px;
+  padding: 10px;
+}
+
+.sound:hover {
+  color: white;
+}
 
 /* AÇILAN PENCERELER */
 .window {
   display: none;
   position: fixed;
-  top: 32%;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  width: 400px;
+  transform: translate(-50%, -50%);
+  width: 430px;
   max-width: 90vw;
-  background: #0d0d0fee;
-  border: 1px solid #684c52;
-  box-shadow: 0 20px 90px #000;
+  background: #0d0e10f5;
+  border: 1px solid #76585d;
+  box-shadow: 0 25px 100px #000e;
   z-index: 20;
 }
-.window.open { display: block; }
+
+.window.open {
+  display: block;
+}
+
 .window-head {
-  padding: 14px 18px;
-  background: #25171b;
-  border-bottom: 1px solid #684c52;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font: 12px Arial, sans-serif;
+  padding: 17px 21px;
+  background: #24171b;
+  border-bottom: 1px solid #76585d;
+  font-size: 11px;
   letter-spacing: 3px;
 }
+
 .window-head button {
-  color: #eee;
-  background: none;
   border: 0;
-  font-size: 22px;
+  background: none;
+  color: #e9e1dc;
+  font-size: 23px;
+  line-height: 1;
 }
-.window-links { padding: 16px 25px; }
-.window-links button {
+
+.window-links {
+  padding: 17px 27px;
+}
+
+.window-link {
+  width: 100%;
+  padding: 22px 5px;
+  border: 0;
+  border-bottom: 1px solid #383134;
+  background: transparent;
+  color: #e6ded9;
   display: flex;
   justify-content: space-between;
-  width: 100%;
-  padding: 19px 5px;
-  border: 0;
-  border-bottom: 1px solid #373035;
-  background: none;
-  color: #e8dfdb;
-  letter-spacing: 3px;
+  align-items: center;
   text-align: left;
+  font-size: 13px;
+  letter-spacing: 3px;
+  transition: color .2s;
 }
-.window-links button:last-child { border: 0; }
-.window-links button:hover { color: #b97b86; }
 
-@media(max-width: 650px) {
-  .top { padding: 25px 7%; }
-  main { padding: 35px 20px 80px; }
-  .folders { grid-template-columns: 1fr; gap: 13px; }
-  .folder { padding: 18px 22px; }
-  .folder-name { font-size: 21px; }
-  .rule { margin: 40px auto 30px; }
-  footer { padding: 24px 7%; letter-spacing: 2px; }
+.window-link:last-child {
+  border-bottom: 0;
 }
+
+.window-link:hover {
+  color: #c68892;
+}
+
+.window-link svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.3;
+  transition: transform .2s;
+}
+
+.window-link:hover svg {
+  transform: translate(3px, -3px);
+}
+
+@media(max-width: 700px) {
+  header {
+    padding: 25px 7%;
+  }
+
+  main {
+    padding: 35px 22px 70px;
+  }
+
+  h1 {
+    font-size: clamp(70px, 16vw, 100px);
+  }
+
+  .quote {
+    line-height: 1.9;
+    letter-spacing: .06em;
+  }
+
+  .author {
+    letter-spacing: 3px;
+  }
+
+  .divider {
+    margin: 40px auto 35px;
+  }
+
+  .folders {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    max-width: 420px;
+  }
+
+  .folder {
+    min-height: 95px;
+    padding: 20px 24px;
+  }
+
+  footer {
+    padding: 22px 7%;
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+}
+
 @media(prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: .01ms !important;
@@ -326,57 +491,73 @@ footer {
 }
 </style>
 </head>
+
 <body>
 
-<div class="forest" aria-hidden="true" id="forest">
+<div class="forest" id="forest" aria-hidden="true">
   <div class="fog"></div>
-  <div class="fog two"></div>
+  <div class="fog second"></div>
   <div class="vignette"></div>
   <div class="grain"></div>
 </div>
 
 <div class="page">
-  <header class="top">
-    <div class="connected">
-      <span class="dot"></span>CONNECTED
-    </div>
+
+  <header>
+    <div class="connected">CONNECTED</div>
   </header>
 
   <main>
-    <div class="content">
+    <section class="content">
+
       <h1>zmey<span>.</span></h1>
 
       <p class="quote">
-        “Hatred is born when people gather together.”
-        <span class="author">— JOHAN LIEBERT</span>
+        “The greatest secret to breaking the rules is to
+        appear as though you are following them.”
+        <span class="author">
+          JOHAN LIEBERT / “MONSTER”
+        </span>
       </p>
 
-      <div class="rule"></div>
+      <div class="divider"></div>
 
-      <nav class="folders" aria-label="Bağlantılar">
+      <nav class="folders" aria-label="ZMEY bağlantıları">
+
         <button class="folder" onclick="openWindow('games')">
-          <svg viewBox="0 0 48 48" aria-hidden="true">
+          <svg class="folder-icon" viewBox="0 0 48 48">
             <path d="M4 13h16l6 6h18v23H4z"/>
             <path d="M4 19h40"/>
           </svg>
-          <span>
-            <span class="folder-name">games/</span>
-            <span class="folder-sub">steam · kick</span>
+
+          <span class="folder-info">
+            <span class="folder-title">games/</span>
+            <span class="folder-sub">STEAM · KICK</span>
           </span>
+
+          <svg class="arrow" viewBox="0 0 24 24">
+            <path d="M4 12h15M13 6l6 6-6 6"/>
+          </svg>
         </button>
 
         <button class="folder" onclick="openWindow('videos')">
-          <svg viewBox="0 0 48 48" aria-hidden="true">
+          <svg class="folder-icon" viewBox="0 0 48 48">
             <path d="M4 13h16l6 6h18v23H4z"/>
             <path d="M4 19h40"/>
           </svg>
-          <span>
-            <span class="folder-name">videos/</span>
-            <span class="folder-sub">youtube · instagram</span>
+
+          <span class="folder-info">
+            <span class="folder-title">videos/</span>
+            <span class="folder-sub">YOUTUBE · INSTAGRAM</span>
           </span>
+
+          <svg class="arrow" viewBox="0 0 24 24">
+            <path d="M4 12h15M13 6l6 6-6 6"/>
+          </svg>
         </button>
+
       </nav>
-    </div>
+    </section>
   </main>
 
   <footer>
@@ -384,32 +565,67 @@ footer {
     <button class="sound" id="soundButton"
       onclick="toggleSound()">◌ SOUND OFF</button>
   </footer>
+
 </div>
 
-<div class="window" id="games">
+<div class="window" id="games" role="dialog"
+     aria-label="Games bağlantıları">
+
   <div class="window-head">
     <span>GAMES</span>
-    <button onclick="closeWindow('games')">×</button>
+    <button onclick="closeWindow('games')"
+      aria-label="Kapat">×</button>
   </div>
+
   <div class="window-links">
-    <button onclick="comingSoon('Steam')">STEAM ↗</button>
-    <button onclick="comingSoon('Kick')">KICK ↗</button>
+
+    <button class="window-link" onclick="comingSoon('Steam')">
+      STEAM
+      <svg viewBox="0 0 24 24">
+        <path d="M5 19 19 5M8 5h11v11"/>
+      </svg>
+    </button>
+
+    <button class="window-link" onclick="comingSoon('Kick')">
+      KICK
+      <svg viewBox="0 0 24 24">
+        <path d="M5 19 19 5M8 5h11v11"/>
+      </svg>
+    </button>
+
   </div>
 </div>
 
-<div class="window" id="videos">
+<div class="window" id="videos" role="dialog"
+     aria-label="Videos bağlantıları">
+
   <div class="window-head">
     <span>VIDEOS</span>
-    <button onclick="closeWindow('videos')">×</button>
+    <button onclick="closeWindow('videos')"
+      aria-label="Kapat">×</button>
   </div>
+
   <div class="window-links">
-    <button onclick="comingSoon('YouTube')">YOUTUBE ↗</button>
-    <button onclick="comingSoon('Instagram')">INSTAGRAM ↗</button>
+
+    <button class="window-link" onclick="comingSoon('YouTube')">
+      YOUTUBE
+      <svg viewBox="0 0 24 24">
+        <path d="M5 19 19 5M8 5h11v11"/>
+      </svg>
+    </button>
+
+    <button class="window-link" onclick="comingSoon('Instagram')">
+      INSTAGRAM
+      <svg viewBox="0 0 24 24">
+        <path d="M5 19 19 5M8 5h11v11"/>
+      </svg>
+    </button>
+
   </div>
 </div>
 
 <script>
-/* RASTGELE ORMAN AĞAÇLARI */
+/* ORMAN AĞAÇLARI */
 const forest = document.getElementById("forest");
 
 function random(seed) {
@@ -417,36 +633,54 @@ function random(seed) {
   return x - Math.floor(x);
 }
 
-for (let i = 0; i < 33; i++) {
+for (let i = 0; i < 48; i++) {
   const tree = document.createElement("div");
   tree.className = "tree";
 
-  const depth = random(i + 5);
-  const height = 55 + depth * 80;
-  const width = 35 + depth * 65;
+  const depth = random(i + 10);
+  const height = 65 + depth * 90;
+  const width = 35 + depth * 90;
 
-  tree.style.setProperty("--x", (random(i + 90) * 115 - 7) + "%");
+  tree.style.setProperty(
+    "--x", (random(i + 100) * 120 - 10) + "%"
+  );
   tree.style.setProperty("--h", height + "vh");
   tree.style.setProperty("--w", width + "px");
-  tree.style.setProperty("--opacity", .25 + depth * .65);
-  tree.style.setProperty("--lean", (random(i + 300) * 12 - 6) + "deg");
+  tree.style.setProperty("--o", .2 + depth * .75);
+  tree.style.setProperty(
+    "--lean", (random(i + 300) * 12 - 6) + "deg"
+  );
+  tree.style.setProperty(
+    "--blur", (1 - depth) * 2.5 + "px"
+  );
 
-  tree.innerHTML = `
-    <div class="trunk"></div>
-    <div class="branch left"></div>
-    <div class="branch right"></div>
-    <div class="branch small-left"></div>
-    <div class="branch small-right"></div>
-  `;
+  let branches = "";
+
+  for (let b = 0; b < 7; b++) {
+    const angle = (b % 2 === 0 ? -1 : 1) *
+      (28 + random(i * 10 + b) * 45);
+
+    branches += `
+      <div class="branch" style="
+        --bottom:${35 + b * 8}%;
+        --bh:${25 + random(i + b) * 25}%;
+        --bw:${3 + depth * 3}px;
+        --angle:${angle}deg;
+      "></div>
+    `;
+  }
+
+  tree.innerHTML = `<div class="trunk"></div>${branches}`;
 
   forest.insertBefore(tree, forest.firstChild);
 }
 
-/* KLASÖRLER */
+/* KLASÖR PENCERELERİ */
 function openWindow(id) {
   document.querySelectorAll(".window").forEach(w => {
     w.classList.remove("open");
   });
+
   document.getElementById(id).classList.add("open");
 }
 
@@ -458,14 +692,67 @@ function comingSoon(name) {
   alert(name + " bağlantısı yakında eklenecek.");
 }
 
-/* SES: ŞİMDİLİK KONTROL HAZIR */
+/* ORİJİNAL, HAFİF AMBIENT SES */
+let audioContext = null;
+let soundNodes = [];
 let soundOn = false;
 
 function toggleSound() {
-  soundOn = !soundOn;
-  document.getElementById("soundButton").textContent =
-    soundOn ? "◉ SOUND ON" : "◌ SOUND OFF";
+  const button = document.getElementById("soundButton");
+
+  if (soundOn) {
+    soundNodes.forEach(node => {
+      try { node.stop(); } catch (e) {}
+    });
+
+    soundNodes = [];
+    soundOn = false;
+    button.textContent = "◌ SOUND OFF";
+    return;
+  }
+
+  try {
+    const AudioCtx =
+      window.AudioContext || window.webkitAudioContext;
+
+    if (!AudioCtx) {
+      alert("Tarayıcınız ses özelliğini desteklemiyor.");
+      return;
+    }
+
+    if (!audioContext) {
+      audioContext = new AudioCtx();
+    }
+
+    audioContext.resume();
+
+    const master = audioContext.createGain();
+    master.gain.value = 0.025;
+    master.connect(audioContext.destination);
+
+    [55, 82.41, 110].forEach((frequency, i) => {
+      const oscillator = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+
+      oscillator.type = "sine";
+      oscillator.frequency.value = frequency;
+      gain.gain.value = i === 0 ? .35 : .12;
+
+      oscillator.connect(gain);
+      gain.connect(master);
+      oscillator.start();
+
+      soundNodes.push(oscillator);
+    });
+
+    soundOn = true;
+    button.textContent = "◉ SOUND ON";
+
+  } catch (error) {
+    console.error("Ses başlatılamadı:", error);
+  }
 }
 </script>
+
 </body>
 </html>
